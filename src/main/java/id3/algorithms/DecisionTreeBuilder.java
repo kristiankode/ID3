@@ -107,11 +107,11 @@ public class DecisionTreeBuilder {
 
         // find most common value
         AttributeValue mostCommon = null;
-        Long topOccurence = 0l;
+        Long topOccurrence = 0l;
         for (AttributeValue val : counters.keySet()) {
             Long current = counters.get(val);
-            if (current >= topOccurence) {
-                topOccurence = current;
+            if (current >= topOccurrence) {
+                topOccurrence = current;
                 mostCommon = val;
             }
         }

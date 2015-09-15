@@ -1,5 +1,8 @@
 package id3.domain;
 
+import id3.domain.attr.AttributeClass;
+import id3.domain.attr.AttributeValue;
+
 /**
  * @author kristian
  *         Created 15.09.15.

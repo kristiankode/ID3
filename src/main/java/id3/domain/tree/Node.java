@@ -1,6 +1,6 @@
 package id3.domain.tree;
 
-import id3.domain.AttributeValue;
+import id3.domain.attr.AttributeValue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,11 +11,9 @@ import java.util.List;
  */
 public class Node {
 
-    List<Node> subtree;
+    List<Node> subtree = new ArrayList<Node>();
 
     NodeClass classification;
-
-    String label;
 
     AttributeValue attributeValue; // the attribute represented by this node
 
@@ -27,20 +25,13 @@ public class Node {
         this.attributeValue = attributeValue;
     }
 
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
-    }
-
-    public boolean isLeaf(){
+    public boolean isLeaf() {
         return classification != null;
     }
 
-    public void setClassification(NodeClass classification){
+    public void setClassification(NodeClass classification) {
         this.classification = classification;
+        System.out.println("Classification was set to : " + classification);
     }
 
     public NodeClass getClassification() {
@@ -48,20 +39,40 @@ public class Node {
     }
 
     public void addChild(Node node) {
-        initSubtreeIfNecessary();
         subtree.add(node);
     }
 
 
-    public void addLeaf(AttributeValue attributeValue) {
+    public void addLeaf(AttributeValue attributeValue, AttributeValue targetValue) {
         Node leaf = new Node();
         leaf.attributeValue = attributeValue;
+        if (attributeValue.equals(targetValue)) {
+            leaf.classification = NodeClass.POSITIVE;
+        } else {
+            leaf.classification = NodeClass.NEGATIVE;
+        }
         this.addChild(leaf);
     }
 
-    private void initSubtreeIfNecessary() {
-        if(subtree == null){
-            subtree = new ArrayList<Node>();
+    public void print() {
+
+        System.out.println(this.toString());
+    }
+
+    public String toString() {
+        String nodeString = "Root";
+
+        if (this.attributeValue != null) {
+            nodeString = this.attributeValue.getLabel() + ": " + this.attributeValue.getValue();
         }
+
+        if (this.isLeaf()) {
+            nodeString = String.valueOf(this.classification);
+        } else {
+            for (Node child : subtree) {
+                nodeString += "\n -> " + child.toString();
+            }
+        }
+        return nodeString;
     }
 }

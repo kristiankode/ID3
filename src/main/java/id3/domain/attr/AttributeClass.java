@@ -1,4 +1,4 @@
-package id3.domain;
+package id3.domain.attr;
 
 import java.util.List;
 
@@ -8,4 +8,6 @@ import java.util.List;
  */
 public interface AttributeClass {
     List<AttributeValue> getPossibleValues();
+
+    String getLabel();
 }

@@ -1,4 +1,4 @@
-package id3.domain;
+package id3.domain.attr;
 
 /**
  * @author kristian

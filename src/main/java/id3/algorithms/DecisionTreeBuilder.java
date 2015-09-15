@@ -1,8 +1,8 @@
 package id3.algorithms;
 
-import id3.domain.AttributeClass;
-import id3.domain.AttributeValue;
 import id3.domain.Sample;
+import id3.domain.attr.AttributeClass;
+import id3.domain.attr.AttributeValue;
 import id3.domain.tree.Node;
 import id3.domain.tree.NodeClass;
 
@@ -18,15 +18,27 @@ import static id3.domain.tree.NodeClass.POSITIVE;
  * @author kristian
  *         Created 15.09.15.
  */
-public class TreeBuilder {
+public class DecisionTreeBuilder {
 
-    public Node ID3(List<Sample> allSamples, AttributeClass targetAttribute, List<AttributeClass> attributes) {
+    public Node build(List<Sample> allSamples, AttributeValue targetAttribute, List<AttributeClass> attributes) {
+
+        System.out.println("Building decision tree for answering: Is it " + targetAttribute.getValue() + "?");
+
+        Node decisionTree = id3Recursion(allSamples, targetAttribute, attributes);
+
+        System.out.println("------ Final decision tree: ----------");
+        decisionTree.print();
+
+        return decisionTree;
+    }
+
+    private Node id3Recursion(List<Sample> allSamples, AttributeValue targetAttribute, List<AttributeClass> attributes) {
 
         Node root = new Node();
 
-        if (allSamplesPositive(allSamples)) {
+        if (allTargetValuesEqual(allSamples, targetAttribute)) {
             root.setClassification(POSITIVE);
-        } else if (allSamplesNegative(allSamples)) {
+        } else if (allSamplesNegative(allSamples, targetAttribute)) {
             root.setClassification(NEGATIVE);
         } else if (attributes.isEmpty()) {
             root.setClassification(mostCommonValueIn(allSamples));
@@ -43,17 +55,18 @@ public class TreeBuilder {
                 List<Sample> matchingSamples = getSamplesWithMatchingAttribute(allSamples, possibleValue);
 
                 if (matchingSamples.isEmpty()) {
-                    attributeNode.addLeaf(mostCommonValueOfAttrInSample(bestAttr, allSamples));
+                    AttributeValue mostCommon = mostCommonValueOfAttrInSample(bestAttr, allSamples);
+                    attributeNode.addLeaf(mostCommon, targetAttribute);
                 } else {
                     List<AttributeClass> remainingAttributes = new ArrayList<AttributeClass>(attributes);
                     remainingAttributes.remove(bestAttr);
 
-                    Node subtree = ID3(matchingSamples, targetAttribute, remainingAttributes);
+                    Node subtree = id3Recursion(matchingSamples, targetAttribute, remainingAttributes);
                     attributeNode.addChild(subtree);
                 }
+                root.addChild(attributeNode);
             }
         }
-
         return root;
     }
 
@@ -124,22 +137,38 @@ public class TreeBuilder {
         }
     }
 
-    boolean allSamplesPositive(List<Sample> samples) {
+    /**
+     * Checks if all samples have the same value for the target attribute
+     *
+     * @param samples
+     * @param targetAttribute
+     * @return
+     */
+    boolean allTargetValuesEqual(List<Sample> samples, AttributeValue targetAttribute) {
+        AttributeValue prevValue = targetAttribute;
+
         for (Sample sample : samples) {
-            if (!sample.isPositive()) {
+            AttributeValue currVal = sample.getAttribute(targetAttribute.getAttributeClass());
+
+            if (!prevValue.equals(currVal)) {
                 return false;
             }
         }
-
+        System.out.println("All " + samples.size() + " values were equal to target (" + prevValue.getValue() + ")");
         return true;
     }
 
-    boolean allSamplesNegative(List<Sample> samples) {
+    boolean allSamplesNegative(List<Sample> samples, AttributeValue targetAttribute) {
+        AttributeValue prevValue = targetAttribute;
+
         for (Sample sample : samples) {
-            if (sample.isPositive()) {
+            AttributeValue currVal = sample.getAttribute(targetAttribute.getAttributeClass());
+
+            if (prevValue.equals(currVal)) {
                 return false;
             }
         }
+        System.out.println("All " + samples.size() + " values were dissimilar to target (" + prevValue.getValue() + ")");
         return true;
     }
 }

@@ -1,0 +1,101 @@
+package id3.analysis;
+
+import id3.domain.Sample;
+import id3.domain.attr.AttributeClass;
+import id3.domain.attr.AttributeValue;
+import id3.domain.tree.NodeClass;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static id3.domain.tree.NodeClass.NEGATIVE;
+import static id3.domain.tree.NodeClass.POSITIVE;
+
+/**
+ * @author kristian
+ *         Created 16.09.15.
+ */
+public class ValueAnalyzer {
+
+    public static AttributeValue mostCommonValueOfAttrInSample(AttributeClass attrClass, List<Sample> samples) {
+        Map<AttributeValue, Long> counters = new HashMap<AttributeValue, Long>();
+
+        // count
+        for (AttributeValue val : attrClass.getPossibleValues()) {
+            Long attrCount = 0l;
+
+            for (Sample sample : samples) {
+                if (sample.getAttribute(attrClass).equals(val)) {
+                    attrCount++;
+                }
+            }
+
+            counters.put(val, attrCount);
+        }
+
+        // find most common value
+        AttributeValue mostCommon = null;
+        Long topOccurrence = 0l;
+        for (AttributeValue val : counters.keySet()) {
+            Long current = counters.get(val);
+            if (current >= topOccurrence) {
+                topOccurrence = current;
+                mostCommon = val;
+            }
+        }
+
+        return mostCommon;
+    }
+
+    public static NodeClass mostCommonValueIn(List<Sample> samples) {
+        int positive = 0, negative = 0;
+
+        for (Sample sample : samples) {
+            if (sample.isPositive()) {
+                positive++;
+            } else {
+                negative++;
+            }
+        }
+
+        if (positive > negative) {
+            return POSITIVE;
+        } else {
+            return NEGATIVE;
+        }
+    }
+
+    /**
+     * Checks if all samples have the same value for the target attribute
+     *
+     * @param samples
+     * @param targetAttribute
+     * @return
+     */
+    public static boolean allSamplesPositive(List<Sample> samples, AttributeValue targetAttribute) {
+
+        for (Sample sample : samples) {
+            AttributeValue currVal = sample.getAttribute(targetAttribute.getAttributeClass());
+
+            if (!targetAttribute.equals(currVal)) {
+                return false;
+            }
+        }
+        System.out.println("All " + samples.size() + " values were equal to target (" + targetAttribute.getValue() + ")");
+        return true;
+    }
+
+    public static boolean allSamplesNegative(List<Sample> samples, AttributeValue targetAttribute) {
+
+        for (Sample sample : samples) {
+            AttributeValue currVal = sample.getAttribute(targetAttribute.getAttributeClass());
+
+            if (targetAttribute.equals(currVal)) {
+                return false;
+            }
+        }
+        System.out.println("All " + samples.size() + " values were dissimilar to target (" + targetAttribute.getValue() + ")");
+        return true;
+    }
+}

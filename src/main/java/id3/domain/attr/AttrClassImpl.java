@@ -30,4 +30,9 @@ public class AttrClassImpl implements AttributeClass{
     public String getLabel() {
         return label;
     }
+
+    @Override
+    public String toString() {
+        return "AttributeClass " + label;
+    }
 }

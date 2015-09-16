@@ -1,24 +1,27 @@
 package id3.algorithms;
 
+import id3.algorithms.selectors.attribute.AttributeSelector;
+import id3.algorithms.selectors.attribute.InformationGainSelector;
 import id3.domain.Sample;
 import id3.domain.attr.AttributeClass;
 import id3.domain.attr.AttributeValue;
 import id3.domain.tree.Node;
-import id3.domain.tree.NodeClass;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import static id3.analysis.ValueAnalyzer.*;
 import static id3.domain.tree.NodeClass.NEGATIVE;
 import static id3.domain.tree.NodeClass.POSITIVE;
+import static id3.filter.SampleFilter.filterByAttributeValue;
 
 /**
  * @author kristian
  *         Created 15.09.15.
  */
 public class DecisionTreeBuilder {
+
+    final AttributeSelector attributeSelector = new InformationGainSelector();
 
     public Node build(List<Sample> allSamples, AttributeValue targetAttribute, List<AttributeClass> attributes) {
 
@@ -36,7 +39,8 @@ public class DecisionTreeBuilder {
 
         Node root = new Node();
 
-        if (allTargetValuesEqual(allSamples, targetAttribute)) {
+        // check if all samples are positive or negative
+        if (allSamplesPositive(allSamples, targetAttribute)) {
             root.setClassification(POSITIVE);
         } else if (allSamplesNegative(allSamples, targetAttribute)) {
             root.setClassification(NEGATIVE);
@@ -46,13 +50,13 @@ public class DecisionTreeBuilder {
 
         if (!root.isLeaf()) { // value has not been set
 
-            AttributeClass bestAttr = getBestAttribute(attributes);
+            AttributeClass bestAttr = attributeSelector.selectAttribute(allSamples, attributes);
 
             for (AttributeValue possibleValue : bestAttr.getPossibleValues()) {
                 Node attributeNode = new Node();
                 attributeNode.setAttributeValue(possibleValue);
 
-                List<Sample> matchingSamples = getSamplesWithMatchingAttribute(allSamples, possibleValue);
+                List<Sample> matchingSamples = filterByAttributeValue(allSamples, possibleValue);
 
                 if (matchingSamples.isEmpty()) {
                     AttributeValue mostCommon = mostCommonValueOfAttrInSample(bestAttr, allSamples);
@@ -68,107 +72,5 @@ public class DecisionTreeBuilder {
             }
         }
         return root;
-    }
-
-    List<Sample> getSamplesWithMatchingAttribute(List<Sample> unfiltered, AttributeValue attribute) {
-
-        List<Sample> matchingSamples = new ArrayList<Sample>();
-        for (Sample sample : unfiltered) {
-            if (sample.hasAttribute(attribute.getAttributeClass())) {
-
-                AttributeValue attrVal = sample.getAttribute(attribute.getAttributeClass());
-                if (attrVal.equals(attribute)) {
-                    matchingSamples.add(sample);
-                }
-            }
-        }
-        return matchingSamples;
-    }
-
-    AttributeClass getBestAttribute(List<AttributeClass> attributes) {
-        return attributes.get(0);
-    }
-
-    AttributeValue mostCommonValueOfAttrInSample(AttributeClass attrClass, List<Sample> samples) {
-        Map<AttributeValue, Long> counters = new HashMap<AttributeValue, Long>();
-
-        // count
-        for (AttributeValue val : attrClass.getPossibleValues()) {
-            Long attrCount = 0l;
-
-            for (Sample sample : samples) {
-                if (sample.getAttribute(attrClass).equals(val)) {
-                    attrCount++;
-                }
-            }
-
-            counters.put(val, attrCount);
-        }
-
-        // find most common value
-        AttributeValue mostCommon = null;
-        Long topOccurrence = 0l;
-        for (AttributeValue val : counters.keySet()) {
-            Long current = counters.get(val);
-            if (current >= topOccurrence) {
-                topOccurrence = current;
-                mostCommon = val;
-            }
-        }
-
-        return mostCommon;
-    }
-
-    NodeClass mostCommonValueIn(List<Sample> samples) {
-        int positive = 0, negative = 0;
-
-        for (Sample sample : samples) {
-            if (sample.isPositive()) {
-                positive++;
-            } else {
-                negative++;
-            }
-        }
-
-        if (positive > negative) {
-            return POSITIVE;
-        } else {
-            return NEGATIVE;
-        }
-    }
-
-    /**
-     * Checks if all samples have the same value for the target attribute
-     *
-     * @param samples
-     * @param targetAttribute
-     * @return
-     */
-    boolean allTargetValuesEqual(List<Sample> samples, AttributeValue targetAttribute) {
-        AttributeValue prevValue = targetAttribute;
-
-        for (Sample sample : samples) {
-            AttributeValue currVal = sample.getAttribute(targetAttribute.getAttributeClass());
-
-            if (!prevValue.equals(currVal)) {
-                return false;
-            }
-        }
-        System.out.println("All " + samples.size() + " values were equal to target (" + prevValue.getValue() + ")");
-        return true;
-    }
-
-    boolean allSamplesNegative(List<Sample> samples, AttributeValue targetAttribute) {
-        AttributeValue prevValue = targetAttribute;
-
-        for (Sample sample : samples) {
-            AttributeValue currVal = sample.getAttribute(targetAttribute.getAttributeClass());
-
-            if (prevValue.equals(currVal)) {
-                return false;
-            }
-        }
-        System.out.println("All " + samples.size() + " values were dissimilar to target (" + prevValue.getValue() + ")");
-        return true;
     }
 }

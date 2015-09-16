@@ -3,6 +3,7 @@ package id3.algorithms.selectors.attribute;
 import id3.algorithms.gain.InformationGainCalc;
 import id3.domain.Sample;
 import id3.domain.attr.AttributeClass;
+import id3.domain.attr.AttributeValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,10 +15,16 @@ import java.util.List;
  * @author kristian
  *         Created 15.09.15.
  */
-public class InformationGainSelector implements AttributeSelector {
+public class InformationGainSelector {
     final static Logger log = LoggerFactory.getLogger(InformationGainSelector.class);
+    final InformationGainCalc informationGainCalc;
+    final AttributeValue targetAttribute;
 
-    InformationGainCalc informationGainCalc = new InformationGainCalc();
+    public InformationGainSelector(AttributeValue targetAttribute) {
+        this.targetAttribute = targetAttribute;
+        informationGainCalc = new InformationGainCalc(targetAttribute);
+    }
+
 
     public AttributeClass selectAttribute(List<Sample> samples, List<AttributeClass> attributeClasses) {
 

@@ -1,6 +1,5 @@
 package id3.algorithms;
 
-import id3.algorithms.selectors.attribute.AttributeSelector;
 import id3.algorithms.selectors.attribute.InformationGainSelector;
 import id3.domain.Sample;
 import id3.domain.attr.AttributeClass;
@@ -21,9 +20,10 @@ import static id3.filter.SampleFilter.filterByAttributeValue;
  */
 public class DecisionTreeBuilder {
 
-    final AttributeSelector attributeSelector = new InformationGainSelector();
+    InformationGainSelector attributeSelector;
 
     public Node build(List<Sample> allSamples, AttributeValue targetAttribute, List<AttributeClass> attributes) {
+        attributeSelector = new InformationGainSelector(targetAttribute);
 
         System.out.println("Building decision tree for answering: Is it " + targetAttribute.getValue() + "?");
 

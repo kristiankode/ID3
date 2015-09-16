@@ -66,6 +66,10 @@ public class ValueAnalyzer {
         }
     }
 
+    public static boolean sampleMatchesTarget(Sample sample, AttributeValue target) {
+        return target.equals(sample.getAttribute(target.getAttributeClass()));
+    }
+
     /**
      * Checks if all samples have the same value for the target attribute
      *
@@ -76,9 +80,7 @@ public class ValueAnalyzer {
     public static boolean allSamplesPositive(List<Sample> samples, AttributeValue targetAttribute) {
 
         for (Sample sample : samples) {
-            AttributeValue currVal = sample.getAttribute(targetAttribute.getAttributeClass());
-
-            if (!targetAttribute.equals(currVal)) {
+            if (!sampleMatchesTarget(sample, targetAttribute)) {
                 return false;
             }
         }
@@ -89,9 +91,7 @@ public class ValueAnalyzer {
     public static boolean allSamplesNegative(List<Sample> samples, AttributeValue targetAttribute) {
 
         for (Sample sample : samples) {
-            AttributeValue currVal = sample.getAttribute(targetAttribute.getAttributeClass());
-
-            if (targetAttribute.equals(currVal)) {
+            if (sampleMatchesTarget(sample, targetAttribute)) {
                 return false;
             }
         }

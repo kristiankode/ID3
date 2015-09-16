@@ -4,6 +4,8 @@ import id3.algorithms.entropy.ListEntropy;
 import id3.domain.Sample;
 import id3.domain.attr.AttributeClass;
 import id3.domain.attr.AttributeValue;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.math.RoundingMode;
 import java.util.List;
@@ -18,13 +20,24 @@ import static java.math.BigDecimal.valueOf;
  *         Created 16.09.15.
  */
 public class InformationGainCalc implements GainCalculator {
+    final static Logger log = LoggerFactory.getLogger(InformationGainCalc.class);
 
     static final ListEntropy entropyCalc = new ListEntropy();
     public static final int PRECISION = 4;
 
+    private final AttributeValue targetAttribute;
+
+    public InformationGainCalc(AttributeValue targetAttribute) {
+        this.targetAttribute = targetAttribute;
+    }
+
     public double getGainFor(List<Sample> samples, AttributeClass attributeClass) {
-        Double initialEntropy = entropyCalc.calculateEntropy(samples);
+        log.debug("Calc initial entropy..");
+        Double initialEntropy = entropyCalc.calculateEntropy(samples, targetAttribute);
         Double expectedEntropy = getExpectedEntropy(samples, attributeClass);
+
+        log.debug("Gain for {} was {} - {} = {}",
+                attributeClass, initialEntropy, expectedEntropy, (initialEntropy - expectedEntropy));
 
         return initialEntropy - expectedEntropy;
     }
@@ -37,15 +50,21 @@ public class InformationGainCalc implements GainCalculator {
             List<Sample> subset = filterByAttributeValue(samples, val);
 
             // find entropy of this subset
-            Double subsetEntropy = entropyCalc.calculateEntropy(subset);
+            Double subsetEntropy = entropyCalc.calculateEntropy(subset, targetAttribute);
+            log.debug("Entropy for subset {} was {}", val.getValue(), subsetEntropy);
 
             // adjust entropy for subset fraction size
             Double subsetWeight =
                     valueOf(subset.size()).divide(valueOf(samples.size()), PRECISION, RoundingMode.HALF_UP)
                             .doubleValue();
+            log.debug("Subset weight: {}, ({}/{}) ", subsetWeight, subset.size(), samples.size());
 
+            Double subsetWeightedEntropy = (subsetEntropy * subsetWeight);
             // accumulate to total expected entropy
-            expectedEntropy += subsetEntropy * subsetWeight;
+            expectedEntropy += subsetWeightedEntropy;
+
+            log.debug("Subset weighted entropy: {}, total expected entropy: {}", subsetWeightedEntropy, expectedEntropy);
+
         }
         return expectedEntropy;
     }

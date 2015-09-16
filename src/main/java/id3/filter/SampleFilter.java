@@ -2,6 +2,8 @@ package id3.filter;
 
 import id3.domain.Sample;
 import id3.domain.attr.AttributeValue;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +13,8 @@ import java.util.List;
  *         Created 16.09.15.
  */
 public class SampleFilter {
+
+    static final Logger log = LoggerFactory.getLogger(SampleFilter.class);
 
     public static List<Sample> filterByAttributeValue(List<Sample> unfiltered, AttributeValue attribute) {
 
@@ -24,6 +28,8 @@ public class SampleFilter {
                 }
             }
         }
+
+        log.debug("Found {} samples that matched {} with value {}", matchingSamples.size(), attribute.getAttributeClass(), attribute.getValue());
         return matchingSamples;
     }
 

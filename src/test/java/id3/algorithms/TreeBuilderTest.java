@@ -26,4 +26,9 @@ public class TreeBuilderTest {
     public void isItCloudy(){
         instance.build(getSamples(), cloudy(), getAttributes());
     }
+
+    @Test
+    public void isItNiceForTennis(){
+        instance.build(getTennisSamples(), niceDayForTennis(), getTennisAttributes());
+    }
 }

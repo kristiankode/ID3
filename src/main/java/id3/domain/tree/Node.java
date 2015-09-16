@@ -55,24 +55,34 @@ public class Node {
     }
 
     public void print() {
-
-        System.out.println(this.toString());
+        print("");
     }
 
-    public String toString() {
-        String nodeString = "Root";
+    private void print(String prefix) {
+        out(prefix + description());
 
+        for (Node n : subtree) {
+            n.print(prefix + "   ");
+        }
+    }
+
+    private void out(String s) {
+        if (s != null && !s.trim().isEmpty()) {
+            System.out.println(s);
+        }
+    }
+
+    public String description() {
+        String nodeString = "";
         if (this.attributeValue != null) {
             nodeString = this.attributeValue.getLabel() + ": " + this.attributeValue.getValue();
         }
 
         if (this.isLeaf()) {
-            nodeString = String.valueOf(this.classification);
-        } else {
-            for (Node child : subtree) {
-                nodeString += "\n -> " + child.toString();
-            }
+            nodeString += String.valueOf(">> " + this.classification);
         }
+
         return nodeString;
     }
+
 }

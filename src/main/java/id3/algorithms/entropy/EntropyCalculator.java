@@ -8,6 +8,9 @@ public class EntropyCalculator {
 
     public double calc(double positiveSamples, double negativeSamples) {
         double totalSamples = positiveSamples + negativeSamples;
+        if(totalSamples == 0) {
+            return 0; // avoid division by zero
+        }
 
         double posEn = -(positiveSamples / totalSamples) * log2(positiveSamples / totalSamples);
         double negEn = -(negativeSamples / totalSamples) * log2(negativeSamples / totalSamples);

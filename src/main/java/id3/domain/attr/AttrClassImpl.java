@@ -33,6 +33,6 @@ public class AttrClassImpl implements AttributeClass{
 
     @Override
     public String toString() {
-        return "AttributeClass " + label;
+        return label;
     }
 }

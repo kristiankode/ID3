@@ -22,4 +22,5 @@ public class InformationGainCalcTest {
 
         assertThat(actual, closeTo(expected, acceptableError));
     }
+
 }

@@ -32,12 +32,8 @@ public class InformationGainCalc implements GainCalculator {
     }
 
     public double getGainFor(List<Sample> samples, AttributeClass attributeClass) {
-        log.debug("Calc initial entropy..");
         Double initialEntropy = entropyCalc.calculateEntropy(samples, targetAttribute);
         Double expectedEntropy = getExpectedEntropy(samples, attributeClass);
-
-        log.debug("Gain for {} was {} - {} = {}",
-                attributeClass, initialEntropy, expectedEntropy, (initialEntropy - expectedEntropy));
 
         return initialEntropy - expectedEntropy;
     }
@@ -51,20 +47,15 @@ public class InformationGainCalc implements GainCalculator {
 
             // find entropy of this subset
             Double subsetEntropy = entropyCalc.calculateEntropy(subset, targetAttribute);
-            log.debug("Entropy for subset {} was {}", val.getValue(), subsetEntropy);
 
             // adjust entropy for subset fraction size
             Double subsetWeight =
                     valueOf(subset.size()).divide(valueOf(samples.size()), PRECISION, RoundingMode.HALF_UP)
                             .doubleValue();
-            log.debug("Subset weight: {}, ({}/{}) ", subsetWeight, subset.size(), samples.size());
 
             Double subsetWeightedEntropy = (subsetEntropy * subsetWeight);
             // accumulate to total expected entropy
             expectedEntropy += subsetWeightedEntropy;
-
-            log.debug("Subset weighted entropy: {}, total expected entropy: {}", subsetWeightedEntropy, expectedEntropy);
-
         }
         return expectedEntropy;
     }

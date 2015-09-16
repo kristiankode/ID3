@@ -19,7 +19,7 @@ public class TestDataFactory {
             temperature = new AttrClassImpl("Temperature", "Hot", "Cool", "Mild"),
             wind = new AttrClassImpl("Wind", "Weak", "Strong"),
             humidity = new AttrClassImpl("Humidity", "High", "Normal"),
-            playTennis = new AttrClassImpl("a nice day for tennis", "Yes", "No"),
+            playTennis = new AttrClassImpl("Tennis potential", "a nice day for tennis", "a horrible day for tennis"),
             weekday = new AttrClassImpl("Weekday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
 
 
@@ -27,20 +27,20 @@ public class TestDataFactory {
 
         return Arrays.asList(
                 (Sample)
-                new SampleImpl( sunny(),    hot(),  highHumidity(),     weakWind(),     noTennis()),
-                new SampleImpl( sunny(),    hot(),  highHumidity(),     strongWind(),   noTennis()),
-                new SampleImpl( cloudy(),   hot(),  highHumidity(),     weakWind(),     niceDayForTennis()),
-                new SampleImpl( rainy(),    mild(), highHumidity(),     weakWind(),     niceDayForTennis()),
-                new SampleImpl( rainy(),    cool(), normalHumidity(),   weakWind(),     niceDayForTennis()),
-                new SampleImpl( rainy(),    cool(), normalHumidity(),   strongWind(),   noTennis()),
-                new SampleImpl( cloudy(),   cool(), normalHumidity(),   strongWind(),   niceDayForTennis()),
-                new SampleImpl( sunny(),    mild(), highHumidity(),     weakWind(),     noTennis()),
-                new SampleImpl( sunny(),    cool(), normalHumidity(),   weakWind(),     niceDayForTennis()),
-                new SampleImpl( rainy(),    mild(), normalHumidity(),   weakWind(),     niceDayForTennis()),
-                new SampleImpl( sunny(),    mild(), normalHumidity(),   strongWind(),   niceDayForTennis()),
-                new SampleImpl( cloudy(),   mild(), highHumidity(),     strongWind(),   niceDayForTennis()),
-                new SampleImpl( cloudy(),   hot(),  normalHumidity(),   weakWind(),     niceDayForTennis()),
-                new SampleImpl( rainy(),    mild(), highHumidity(),     strongWind(),   noTennis())
+                        new SampleImpl(sunny(), hot(), highHumidity(), weakWind(), noTennis()),
+                new SampleImpl(sunny(), hot(), highHumidity(), strongWind(), noTennis()),
+                new SampleImpl(cloudy(), hot(), highHumidity(), weakWind(), niceDayForTennis()),
+                new SampleImpl(rainy(), mild(), highHumidity(), weakWind(), niceDayForTennis()),
+                new SampleImpl(rainy(), cool(), normalHumidity(), weakWind(), niceDayForTennis()),
+                new SampleImpl(rainy(), cool(), normalHumidity(), strongWind(), noTennis()),
+                new SampleImpl(cloudy(), cool(), normalHumidity(), strongWind(), niceDayForTennis()),
+                new SampleImpl(sunny(), mild(), highHumidity(), weakWind(), noTennis()),
+                new SampleImpl(sunny(), cool(), normalHumidity(), weakWind(), niceDayForTennis()),
+                new SampleImpl(rainy(), mild(), normalHumidity(), weakWind(), niceDayForTennis()),
+                new SampleImpl(sunny(), mild(), normalHumidity(), strongWind(), niceDayForTennis()),
+                new SampleImpl(cloudy(), mild(), highHumidity(), strongWind(), niceDayForTennis()),
+                new SampleImpl(cloudy(), hot(), normalHumidity(), weakWind(), niceDayForTennis()),
+                new SampleImpl(rainy(), mild(), highHumidity(), strongWind(), noTennis())
         );
 
     }
@@ -53,12 +53,12 @@ public class TestDataFactory {
         return playTennis.getPossibleValues().get(0);
     }
 
-    public static List<AttributeClass> getTennisAttributes(){
-        return Arrays.asList(weather, temperature, humidity, wind, playTennis);
+    public static List<AttributeClass> getTennisAttributes() {
+        return new ArrayList<AttributeClass>(Arrays.asList(weather, temperature, humidity, wind, playTennis));
     }
 
     public static List<AttributeClass> getAttributes() {
-        return Arrays.asList(weather, temperature, weekday);
+        return new ArrayList<AttributeClass>(Arrays.asList(weather, temperature, weekday));
     }
 
     public static Sample rainyMonday() {

@@ -5,6 +5,8 @@ import id3.domain.Sample;
 import id3.domain.attr.AttributeClass;
 import id3.domain.attr.AttributeValue;
 import id3.domain.tree.Node;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,13 +21,16 @@ import static id3.filter.SampleFilter.filterByAttributeValue;
  *         Created 15.09.15.
  */
 public class DecisionTreeBuilder {
+    final static Logger log = LoggerFactory.getLogger(DecisionTreeBuilder.class);
 
     InformationGainSelector attributeSelector;
 
     public Node build(List<Sample> allSamples, AttributeValue targetAttribute, List<AttributeClass> attributes) {
-        attributeSelector = new InformationGainSelector(targetAttribute);
-
         System.out.println("Building decision tree for answering: Is it " + targetAttribute.getValue() + "?");
+        System.out.println("----------------------------------------------------------------");
+
+        attributeSelector = new InformationGainSelector(targetAttribute);
+        sanitizeAttributes(attributes, targetAttribute);
 
         Node decisionTree = id3Recursion(allSamples, targetAttribute, attributes);
 
@@ -33,6 +38,17 @@ public class DecisionTreeBuilder {
         decisionTree.print();
 
         return decisionTree;
+    }
+
+    private void sanitizeAttributes(List<AttributeClass> attributes, AttributeValue target) {
+        int i = -1;
+        if (attributes.contains(target.getAttributeClass())) {
+            i = attributes.indexOf(target.getAttributeClass());
+            log.info("Removed target ({}) from attribute list", target.getAttributeClass());
+        }
+        if (i >= 0) {
+            attributes.remove(i);
+        }
     }
 
     private Node id3Recursion(List<Sample> allSamples, AttributeValue targetAttribute, List<AttributeClass> attributes) {

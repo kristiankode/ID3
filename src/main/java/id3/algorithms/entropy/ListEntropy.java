@@ -19,9 +19,6 @@ public class ListEntropy {
     EntropyCalculator entropy = new EntropyCalculator();
 
     public double calculateEntropy(List<Sample> samples, AttributeValue targetAttribute) {
-        log.debug("Calculating entropy for {} samples with target {}",
-                samples.size(), targetAttribute.getValue());
-
         int positive = countPositiveSamples(samples, targetAttribute);
         int negative = countNegativeSamples(samples, targetAttribute);
 

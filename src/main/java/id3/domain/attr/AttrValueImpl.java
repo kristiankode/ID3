@@ -25,4 +25,23 @@ public class AttrValueImpl implements AttributeValue {
     public String getLabel() {
         return attributeClass.getLabel();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AttrValueImpl attrValue = (AttrValueImpl) o;
+
+        if (!attributeClass.equals(attrValue.attributeClass)) return false;
+        return !(value != null ? !value.equals(attrValue.value) : attrValue.value != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = attributeClass.hashCode();
+        result = 31 * result + (value != null ? value.hashCode() : 0);
+        return result;
+    }
 }

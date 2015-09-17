@@ -25,7 +25,6 @@ public class InformationGainSelector {
         informationGainCalc = new InformationGainCalc(targetAttribute);
     }
 
-
     public AttributeClass selectAttribute(List<Sample> samples, List<AttributeClass> attributeClasses) {
 
         Double highestInfoGain = 0.0;

@@ -40,7 +40,22 @@ public class SampleImpl implements Sample {
         return null;
     }
 
+    public List<AttributeValue> getAttributes() {
+        return attributes;
+    }
+
     public AttributeClass getBestAttribute() {
         return attributes.get(0).getAttributeClass();
+    }
+
+    public String toString() {
+        String desc = "Sample [";
+
+        for (AttributeValue val : attributes) {
+            desc += val.getLabel() + ":" + val.getValue();
+            desc += "   ";
+        }
+        desc += "]";
+        return desc;
     }
 }

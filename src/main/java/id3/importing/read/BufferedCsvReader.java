@@ -1,4 +1,4 @@
-package id3.csv.read;
+package id3.importing.read;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,30 +9,61 @@ import java.io.*;
  * @author kristian
  *         Created 03.09.15.
  */
-public class BufferedCsvReader {
+public class BufferedCsvReader implements DataReader {
     private final static Logger log = LoggerFactory.getLogger(BufferedCsvReader.class);
 
     final String inputFilePath;
-    final BufferedReader bufferedReader;
+    BufferedReader bufferedReader;
 
     public static final String
             BLANK_SPACE_BABY = " ",
             COMMA_CHAMELEON = ",",
             EMPTY_STRING = "";
+    private boolean readingStarted = false;
 
     public BufferedCsvReader(String inputFilePath)
             throws FileNotFoundException, UnsupportedEncodingException {
         this.inputFilePath = inputFilePath;
-
         Reader reader = new InputStreamReader(
                 new FileInputStream(inputFilePath));
         bufferedReader = new BufferedReader(reader);
     }
 
-    public String[] readNextRow() {
+    private void resetReader() {
+        Reader reader = null;
+        try {
+            reader = new InputStreamReader(
+                    new FileInputStream(inputFilePath));
+            bufferedReader = new BufferedReader(reader);
+            readingStarted = false;
+        } catch (FileNotFoundException e) {
+            // ignore, exception occurs in constructor if file does not exist
+        }
+    }
+
+    public String[] readHeaderRow() {
+        if (hasReadingStarted()) {
+            resetReader();
+        }
+        return readNextRow();
+    }
+
+    public String[] readDataRows() {
+        if (!hasReadingStarted()) {
+            readHeaderRow();
+        }
+        return readNextRow();
+    }
+
+    private boolean hasReadingStarted() {
+        return readingStarted;
+    }
+
+    private String[] readNextRow() {
         String[] row = null;
         try {
             String line = bufferedReader.readLine();
+            readingStarted = true;
             if (line != null) {
                 line = sanitizeLine(line);
                 row = convertToArray(line);

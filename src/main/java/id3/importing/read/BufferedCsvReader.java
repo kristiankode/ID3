@@ -30,7 +30,7 @@ public class BufferedCsvReader implements DataReader {
     }
 
     private void resetReader() {
-        Reader reader = null;
+        Reader reader;
         try {
             reader = new InputStreamReader(
                     new FileInputStream(inputFilePath));
@@ -63,13 +63,21 @@ public class BufferedCsvReader implements DataReader {
         String[] row = null;
         try {
             String line = bufferedReader.readLine();
+            row = createRow(line);
             readingStarted = true;
-            if (line != null) {
-                line = sanitizeLine(line);
-                row = convertToArray(line);
-            }
         } catch (IOException e) {
             log.error("Error while trying to read line: {}", e.getMessage());
+        }
+        return row;
+    }
+
+    String[] createRow(String line) {
+        String[] row = null;
+        if (line != null) {
+            if (readingStarted) { // don't sanitize header
+                line = sanitizeData(line);
+            }
+            row = convertToArray(line);
         }
         return row;
     }
@@ -79,7 +87,10 @@ public class BufferedCsvReader implements DataReader {
         return row.length > 1 ? row : null;
     }
 
-    String sanitizeLine(String line) {
+    /**
+     * Removes unwanted characters form a data row
+     */
+    String sanitizeData(String line) {
         return line.replace(BLANK_SPACE_BABY, EMPTY_STRING);
     }
 

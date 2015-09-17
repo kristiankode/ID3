@@ -53,7 +53,7 @@ public class SampleImpl implements Sample {
 
         for (AttributeValue val : attributes) {
             desc += val.getLabel() + ":" + val.getValue();
-            desc += "   ";
+            desc += " ";
         }
         desc += "]";
         return desc;

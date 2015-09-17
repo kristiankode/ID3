@@ -32,12 +32,10 @@ public class SampleBuilder {
         String[] line;
         while ((line = reader.readDataRows()) != null) {
             Sample s = buildSample(line, attrClasses);
-            log.debug("Created {}", s);
             samples.add(s);
         }
 
         return samples;
-
     }
 
     Sample buildSample(String[] row, Map<Integer, AttrClassImpl> attrClasses) {

@@ -48,11 +48,14 @@ public class ValueAnalyzer {
         return mostCommon;
     }
 
-    public static NodeClass mostCommonValueIn(List<Sample> samples) {
+    /**
+     * Finds the most frequent classification in a set.
+     */
+    public static NodeClass mostCommonValueIn(List<Sample> samples, AttributeValue target) {
         int positive = 0, negative = 0;
 
         for (Sample sample : samples) {
-            if (sample.isPositive()) {
+            if (sampleMatchesTarget(sample, target)) {
                 positive++;
             } else {
                 negative++;

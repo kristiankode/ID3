@@ -11,17 +11,9 @@ import java.util.List;
  */
 public interface Sample {
 
-    boolean isPositive();
-
-    boolean isAttributesEmpty();
-
     boolean hasAttribute(AttributeClass attribute);
 
     AttributeValue getAttribute(AttributeClass label);
     List<AttributeValue> getAttributes();
 
-    /**
-     * Gets the attribute that is the most effective for classifying the sample.
-     */
-    AttributeClass getBestAttribute();
 }

@@ -61,7 +61,7 @@ public class DecisionTreeBuilder {
         } else if (allSamplesNegative(allSamples, targetAttribute)) {
             root.setClassification(NEGATIVE);
         } else if (attributes.isEmpty()) {
-            root.setClassification(mostCommonValueIn(allSamples));
+            root.setClassification(mostCommonValueIn(allSamples, targetAttribute));
         }
 
         if (!root.isLeaf()) { // value has not been set

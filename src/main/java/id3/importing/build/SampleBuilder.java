@@ -1,4 +1,4 @@
-package id3.importing;
+package id3.importing.build;
 
 import id3.domain.Sample;
 import id3.domain.SampleImpl;

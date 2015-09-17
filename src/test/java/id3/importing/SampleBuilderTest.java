@@ -1,6 +1,7 @@
 package id3.importing;
 
 import id3.domain.Sample;
+import id3.importing.build.SampleBuilder;
 import id3.importing.read.DataReader;
 import org.junit.Before;
 import org.junit.Test;

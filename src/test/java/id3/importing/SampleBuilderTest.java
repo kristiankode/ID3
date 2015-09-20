@@ -51,6 +51,9 @@ public class SampleBuilderTest {
         when(reader.readDataRows()).thenReturn(
                 new String[]{row1col1, row1col2, row1col3},
                 new String[]{row2col1, row2col2, row2col3},
+                null,
+                new String[]{row1col1, row1col2, row1col3},// dataset repeated twice, because unable to mock "reader.startFromTop"
+                new String[]{row2col1, row2col2, row2col3},
                 null);
     }
 

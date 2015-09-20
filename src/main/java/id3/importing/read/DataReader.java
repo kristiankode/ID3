@@ -6,6 +6,8 @@ package id3.importing.read;
  */
 public interface DataReader {
 
+    void startFromTop();
+
     String[] readHeaderRow();
 
     String[] readDataRows();

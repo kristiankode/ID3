@@ -1,6 +1,8 @@
 package id3.importing;
 
 import id3.domain.Sample;
+import id3.domain.attr.AttributeClass;
+import id3.importing.build.AttributeExtractor;
 import id3.importing.build.SampleBuilder;
 import id3.importing.read.DataReader;
 import org.junit.Before;
@@ -9,6 +11,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
@@ -53,7 +56,11 @@ public class SampleBuilderTest {
 
     @Test
     public void buildSamples_givenHeaderAndData_sampleShouldContainCorrectLabelAndAttributes(){
-        List<Sample> samples = instance.buildSamples(reader);
+        // todo: separate test for attr.extractor
+        AttributeExtractor attributeExtractor = new AttributeExtractor();
+        List<AttributeClass> attributes = attributeExtractor.getAllAttributes(reader);
+
+        List<Sample> samples = instance.buildSamples(reader, attributes);
 
         Sample firstSample = samples.get(0);
         assertThat(firstSample.getAttributes().get(0).getLabel(), is(head1));
@@ -77,7 +84,8 @@ public class SampleBuilderTest {
     @Test
     public void buildSamples_givenTwoRow_shouldProduceTwoSamplesWithoutErrors()
             throws Exception {
-        List<Sample> samples = instance.buildSamples(reader);
+        List<AttributeClass> attributes = new AttributeExtractor().getAllAttributes(reader);
+        List<Sample> samples = instance.buildSamples(reader, attributes);
 
         assertThat(samples.size(), is(2));
     }

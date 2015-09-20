@@ -29,7 +29,7 @@ public class BufferedCsvReader implements DataReader {
         bufferedReader = new BufferedReader(reader);
     }
 
-    private void resetReader() {
+    public void startFromTop() {
         Reader reader;
         try {
             reader = new InputStreamReader(
@@ -43,7 +43,7 @@ public class BufferedCsvReader implements DataReader {
 
     public String[] readHeaderRow() {
         if (hasReadingStarted()) {
-            resetReader();
+            startFromTop();
         }
         return readNextRow();
     }

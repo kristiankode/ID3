@@ -6,16 +6,19 @@ import id3.domain.attr.AttributeClass;
 import id3.domain.attr.AttributeValue;
 import id3.domain.tree.NodeClass;
 import id3.importing.build.SampleImpl;
+import id3.prediction.analysis.PredictionEvaluator;
 import id3.testdata.MushroomTestData;
 import id3.training.algorithms.DecisionTreeBuilder;
 import org.junit.Test;
 
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static id3.domain.attr.TestDataFactory.*;
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.number.IsCloseTo.closeTo;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -24,6 +27,7 @@ import static org.junit.Assert.assertThat;
  */
 public class PredictTest {
 
+    public static final double acceptableError = 0.001;
     DecisionTreeBuilder treeBuilder = new DecisionTreeBuilder();
     Predict instance = new Predict();
 
@@ -43,6 +47,37 @@ public class PredictTest {
 
         assertThat(actual, is(expected));
     }
+
+    @Test
+    public void predictTennis_givenTrainingData_expect100Percent() {
+        Model model = treeBuilder.build(getTennisSamples(), niceDayForTennis(), getTennisAttributes());
+
+        List<Sample> predictThis = getTennisSamples();
+
+        List<Prediction> predictions = instance.predict(model, predictThis);
+
+        Double expectedAccuracy = 100.0,
+                actual = PredictionEvaluator.evaluatePredictionAccuracy(predictions, model.getTargetAttribute());
+
+        assertThat(actual, closeTo(expectedAccuracy, acceptableError));
+    }
+
+    @Test
+    public void predictTennis_givenOneOutlier_expect14Of15Correct() {
+        Model model = treeBuilder.build(getTennisSamples(), niceDayForTennis(), getTennisAttributes());
+
+        List<Sample> predictThis = new ArrayList<Sample>(getTennisSamples());
+        Sample outlier = new SampleImpl(cloudy(), hot(), highHumidity(), strongWind(), noTennis());
+        predictThis.add(outlier);
+
+        List<Prediction> predictions = instance.predict(model, predictThis);
+
+        Double expectedAccuracy = 93.333,
+                actual = PredictionEvaluator.evaluatePredictionAccuracy(predictions, model.getTargetAttribute());
+
+        assertThat(actual, closeTo(expectedAccuracy, acceptableError));
+    }
+
 
     @Test
     public void predictFriday_givenCloudy_shouldReturnNegative() {

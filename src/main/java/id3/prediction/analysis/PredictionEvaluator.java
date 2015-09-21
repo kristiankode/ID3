@@ -23,9 +23,7 @@ public class PredictionEvaluator {
         NodeClass correctPrediction =
                 NodeClass.fromBoolean(sampleMatchesTarget(prediction.getSample(), target));
 
-        log.debug("Sample was classified as {}, correct classification was {}", prediction, correctPrediction);
-
-        return correctPrediction.equals(prediction);
+        return correctPrediction.equals(prediction.getPredictedValue());
     }
 
     public static double evaluatePredictionAccuracy(List<Prediction> predictions, AttributeValue target) {
@@ -41,7 +39,7 @@ public class PredictionEvaluator {
 
         int total = correct + incorrect;
 
-        Double accuracy = valueOf(correct).divide(valueOf(total), 5, RoundingMode.HALF_UP).doubleValue();
+        Double accuracy = valueOf(correct).divide(valueOf(total), 5, RoundingMode.HALF_UP).doubleValue() * 100;
 
         log.info("Predicted {} of {} values correctly, accuracy = {}%", correct, total, accuracy);
 

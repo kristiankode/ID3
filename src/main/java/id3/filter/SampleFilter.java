@@ -18,6 +18,7 @@ public class SampleFilter {
 
     public static List<Sample> filterByAttributeValue(List<Sample> unfiltered, AttributeValue attribute) {
 
+
         List<Sample> matchingSamples = new ArrayList<Sample>();
         for (Sample sample : unfiltered) {
             if (sample.hasAttribute(attribute.getAttributeClass())) {
@@ -29,7 +30,8 @@ public class SampleFilter {
             }
         }
 
-        log.debug("Found {} samples that matched {} with value {}", matchingSamples.size(), attribute.getAttributeClass(), attribute.getValue());
+        log.debug("Filtering {} samples by attribute {}, found {} matching samples",
+                unfiltered.size(), attribute.getLabel() + ":" + attribute.getValue(), matchingSamples.size());
         return matchingSamples;
     }
 

@@ -57,7 +57,7 @@ public class TestDataFactory {
         return new ArrayList<AttributeClass>(Arrays.asList(weather, temperature, humidity, wind, playTennis));
     }
 
-    public static List<AttributeClass> getAttributes() {
+    public static List<AttributeClass> getSunnyFridayAttributes() {
         return new ArrayList<AttributeClass>(Arrays.asList(weather, temperature, weekday));
     }
 
@@ -121,11 +121,11 @@ public class TestDataFactory {
         return humidity.getPossibleValues().get(1);
     }
 
-    private static AttributeValue randomTemp() {
+    public static AttributeValue randomTemp() {
         return temperature.getPossibleValues().get(new Random().nextInt(2));
     }
 
-    public static List<Sample> getSamples() {
+    public static List<Sample> getSunnyFridaySamples() {
         List<Sample> mondaySucks = new ArrayList<Sample>();
 
         int i = 0, limit = 10;

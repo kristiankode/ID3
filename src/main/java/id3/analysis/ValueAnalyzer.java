@@ -4,6 +4,8 @@ import id3.domain.Sample;
 import id3.domain.attr.AttributeClass;
 import id3.domain.attr.AttributeValue;
 import id3.domain.tree.NodeClass;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,8 +19,13 @@ import static id3.domain.tree.NodeClass.POSITIVE;
  *         Created 16.09.15.
  */
 public class ValueAnalyzer {
+    static Logger log = LoggerFactory.getLogger(ValueAnalyzer.class);
 
+    // todo return NodeClass?
     public static AttributeValue mostCommonValueOfAttrInSample(AttributeClass attrClass, List<Sample> samples) {
+
+        log.debug("Finding most common value of attr {} in {} samples", attrClass, samples.size());
+
         Map<AttributeValue, Long> counters = new HashMap<AttributeValue, Long>();
 
         // count
@@ -70,7 +77,7 @@ public class ValueAnalyzer {
     }
 
     public static boolean sampleMatchesTarget(Sample sample, AttributeValue target) {
-        return target.equals(sample.getAttribute(target.getAttributeClass()));
+        return target != null && target.equals(sample.getAttribute(target.getAttributeClass()));
     }
 
     /**

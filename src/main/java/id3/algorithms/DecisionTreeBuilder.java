@@ -5,6 +5,7 @@ import id3.domain.Sample;
 import id3.domain.attr.AttributeClass;
 import id3.domain.attr.AttributeValue;
 import id3.domain.tree.Node;
+import id3.domain.tree.NodeClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,7 +33,8 @@ public class DecisionTreeBuilder {
         attributeSelector = new InformationGainSelector(targetAttribute);
         sanitizeAttributes(attributes, targetAttribute);
 
-        Node decisionTree = id3Recursion(allSamples, targetAttribute, attributes);
+        Node rootNode = new Node();
+        Node decisionTree = id3Recursion(allSamples, targetAttribute, attributes, rootNode);
 
         System.out.println("------ Final decision tree: ----------");
         decisionTree.print();
@@ -51,9 +53,8 @@ public class DecisionTreeBuilder {
         }
     }
 
-    private Node id3Recursion(List<Sample> allSamples, AttributeValue targetAttribute, List<AttributeClass> attributes) {
-
-        Node root = new Node();
+    private Node id3Recursion(List<Sample> allSamples, AttributeValue targetAttribute, List<AttributeClass> attributes,
+                              Node root) {
 
         // check if all samples are positive or negative
         if (allSamplesPositive(allSamples, targetAttribute)) {
@@ -68,21 +69,36 @@ public class DecisionTreeBuilder {
 
             AttributeClass bestAttr = attributeSelector.selectAttribute(allSamples, attributes);
 
+            log.debug("Expanding for attribute {}, possible values:", bestAttr.getLabel());
+
+            for (AttributeValue val : bestAttr.getPossibleValues()) {
+                log.debug(val.getValue());
+            }
+
             for (AttributeValue possibleValue : bestAttr.getPossibleValues()) {
+
                 Node attributeNode = new Node();
                 attributeNode.setAttributeValue(possibleValue);
 
                 List<Sample> matchingSamples = filterByAttributeValue(allSamples, possibleValue);
 
                 if (matchingSamples.isEmpty()) {
-                    AttributeValue mostCommon = mostCommonValueOfAttrInSample(bestAttr, allSamples);
-                    attributeNode.addLeaf(mostCommon, targetAttribute);
+                    NodeClass mostCommon = mostCommonValueIn(allSamples, targetAttribute);
+                    attributeNode.makeLeaf(possibleValue, mostCommon);
+                    log.debug("Found no matching samples for attr {}, added leaf {}",
+                            mostCommon,
+                            attributeNode.description());
                 } else {
+
+                    log.debug("Found {} matching samples for attr {}", matchingSamples.size(), bestAttr.getLabel());
                     List<AttributeClass> remainingAttributes = new ArrayList<AttributeClass>(attributes);
                     remainingAttributes.remove(bestAttr);
 
-                    Node subtree = id3Recursion(matchingSamples, targetAttribute, remainingAttributes);
-                    attributeNode.addChild(subtree);
+                    log.debug("Adding to attr node {}", attributeNode.description());
+                    Node subtree = id3Recursion(matchingSamples, targetAttribute, remainingAttributes, attributeNode);
+                    log.debug("    the subtree {}", subtree.description());
+
+                    //attributeNode.addChild(subtree);
                 }
                 root.addChild(attributeNode);
             }

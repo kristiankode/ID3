@@ -33,7 +33,7 @@ public class SampleBuilder {
         return samples;
     }
 
-    Sample buildSample(String[] row, List<AttributeClass> attrClasses) {
+    public Sample buildSample(String[] row, List<AttributeClass> attrClasses) {
 
         AttributeValue[] sampleValues = new AttributeValue[attrClasses.size()];
 

@@ -21,17 +21,17 @@ public class TreeBuilderTest {
 
     @Test
     public void isItFriday() throws Exception {
-        instance.build(getSamples(), friday(), getAttributes());
+        instance.build(getSunnyFridaySamples(), friday(), getSunnyFridayAttributes());
     }
 
     @Test
     public void isItMonday() {
-        instance.build(getSamples(), monday(), getAttributes());
+        instance.build(getSunnyFridaySamples(), monday(), getSunnyFridayAttributes());
     }
 
     @Test
     public void isItCloudy(){
-        instance.build(getSamples(), cloudy(), getAttributes());
+        instance.build(getSunnyFridaySamples(), cloudy(), getSunnyFridayAttributes());
     }
 
     @Test

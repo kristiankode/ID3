@@ -45,8 +45,6 @@ public class AttributeExtractor {
         AttributeClass existingClass = attributes.get(index);
         if (!existingClass.getPossibleValues().contains(val)) {
             val.getAttributeClass().getPossibleValues().add(val);
-            log.debug("Updated attribute {}, now contains {} possible values",
-                    existingClass, attributes.get(index).getPossibleValues().size());
         }
     }
 

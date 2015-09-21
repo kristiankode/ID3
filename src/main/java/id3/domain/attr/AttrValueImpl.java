@@ -26,6 +26,10 @@ public class AttrValueImpl implements AttributeValue {
         return attributeClass.getLabel();
     }
 
+    public String toString() {
+        return getLabel() + ":" + value;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -25,6 +25,10 @@ public class Node {
         this.attributeValue = attributeValue;
     }
 
+    public boolean isRoot() {
+        return !this.isLeaf() && attributeValue == null;
+    }
+
     public boolean isLeaf() {
         return classification != null;
     }
@@ -42,8 +46,11 @@ public class Node {
         subtree.add(node);
     }
 
+    public List<Node> getChildren() {
+        return subtree;
+    }
 
-    public void addLeaf(AttributeValue attributeValue, AttributeValue targetValue) {
+    public Node createLeaf(AttributeValue attributeValue, AttributeValue targetValue) {
         Node leaf = new Node();
         leaf.attributeValue = attributeValue;
         if (attributeValue.equals(targetValue)) {
@@ -51,6 +58,33 @@ public class Node {
         } else {
             leaf.classification = NodeClass.NEGATIVE;
         }
+        return leaf;
+    }
+
+    public void makeLeaf(AttributeValue attributeValue, NodeClass classification) {
+        this.classification = classification;
+        this.attributeValue = attributeValue;
+        this.subtree = new ArrayList<Node>();
+
+    }
+
+    public void makeLeaf(AttributeValue attributeValue, AttributeValue targetValue) {
+
+        NodeClass nodeClass;
+
+        if (attributeValue.equals(targetValue)) {
+            nodeClass = NodeClass.POSITIVE;
+        } else {
+            nodeClass = NodeClass.NEGATIVE;
+        }
+
+        makeLeaf(attributeValue, nodeClass);
+
+    }
+
+
+    public void addLeaf(AttributeValue attributeValue, AttributeValue targetValue) {
+        Node leaf = createLeaf(attributeValue, targetValue);
         this.addChild(leaf);
     }
 
@@ -73,7 +107,7 @@ public class Node {
     }
 
     public String description() {
-        String nodeString = "";
+        String nodeString = "(root)";
         if (this.attributeValue != null) {
             nodeString = this.attributeValue.getLabel() + ": " + this.attributeValue.getValue();
         }

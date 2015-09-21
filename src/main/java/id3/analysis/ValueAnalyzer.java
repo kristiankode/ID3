@@ -1,15 +1,12 @@
 package id3.analysis;
 
 import id3.domain.Sample;
-import id3.domain.attr.AttributeClass;
 import id3.domain.attr.AttributeValue;
 import id3.domain.tree.NodeClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static id3.domain.tree.NodeClass.NEGATIVE;
 import static id3.domain.tree.NodeClass.POSITIVE;
@@ -20,40 +17,6 @@ import static id3.domain.tree.NodeClass.POSITIVE;
  */
 public class ValueAnalyzer {
     static Logger log = LoggerFactory.getLogger(ValueAnalyzer.class);
-
-    // todo return NodeClass?
-    public static AttributeValue mostCommonValueOfAttrInSample(AttributeClass attrClass, List<Sample> samples) {
-
-        log.debug("Finding most common value of attr {} in {} samples", attrClass, samples.size());
-
-        Map<AttributeValue, Long> counters = new HashMap<AttributeValue, Long>();
-
-        // count
-        for (AttributeValue val : attrClass.getPossibleValues()) {
-            Long attrCount = 0l;
-
-            for (Sample sample : samples) {
-                if (sample.getAttribute(attrClass).equals(val)) {
-                    attrCount++;
-                }
-            }
-
-            counters.put(val, attrCount);
-        }
-
-        // find most common value
-        AttributeValue mostCommon = null;
-        Long topOccurrence = 0l;
-        for (AttributeValue val : counters.keySet()) {
-            Long current = counters.get(val);
-            if (current >= topOccurrence) {
-                topOccurrence = current;
-                mostCommon = val;
-            }
-        }
-
-        return mostCommon;
-    }
 
     /**
      * Finds the most frequent classification in a set.
@@ -94,7 +57,6 @@ public class ValueAnalyzer {
                 return false;
             }
         }
-        System.out.println("All " + samples.size() + " values were equal to target (" + targetAttribute.getValue() + ")");
         return true;
     }
 
@@ -105,7 +67,6 @@ public class ValueAnalyzer {
                 return false;
             }
         }
-        System.out.println("All " + samples.size() + " values were dissimilar to target (" + targetAttribute.getValue() + ")");
         return true;
     }
 }

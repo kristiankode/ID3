@@ -43,7 +43,7 @@ public class MushroomTestData {
             throws FileNotFoundException, UnsupportedEncodingException {
         SampleBuilder sampleBuilder = new SampleBuilder();
         String
-                classification = "p",
+                classification = "e",
                 capShape = "x",
                 capSurface = "s",
                 capColor = "n",

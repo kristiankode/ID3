@@ -69,12 +69,6 @@ public class DecisionTreeBuilder {
 
             AttributeClass bestAttr = attributeSelector.selectAttribute(allSamples, attributes);
 
-            log.debug("Expanding for attribute {}, possible values:", bestAttr.getLabel());
-
-            for (AttributeValue val : bestAttr.getPossibleValues()) {
-                log.debug(val.getValue());
-            }
-
             for (AttributeValue possibleValue : bestAttr.getPossibleValues()) {
 
                 Node attributeNode = new Node();
@@ -90,15 +84,10 @@ public class DecisionTreeBuilder {
                             attributeNode.description());
                 } else {
 
-                    log.debug("Found {} matching samples for attr {}", matchingSamples.size(), bestAttr.getLabel());
                     List<AttributeClass> remainingAttributes = new ArrayList<AttributeClass>(attributes);
                     remainingAttributes.remove(bestAttr);
 
-                    log.debug("Adding to attr node {}", attributeNode.description());
-                    Node subtree = id3Recursion(matchingSamples, targetAttribute, remainingAttributes, attributeNode);
-                    log.debug("    the subtree {}", subtree.description());
-
-                    //attributeNode.addChild(subtree);
+                    id3Recursion(matchingSamples, targetAttribute, remainingAttributes, attributeNode);
                 }
                 root.addChild(attributeNode);
             }

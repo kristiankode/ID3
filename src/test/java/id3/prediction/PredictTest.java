@@ -7,7 +7,6 @@ import id3.domain.attr.AttributeClass;
 import id3.domain.attr.AttributeValue;
 import id3.domain.tree.Node;
 import id3.domain.tree.NodeClass;
-import id3.importing.build.SampleBuilder;
 import id3.testdata.MushroomTestData;
 import org.junit.Test;
 

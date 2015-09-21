@@ -30,8 +30,6 @@ public class SampleFilter {
             }
         }
 
-        log.debug("Filtering {} samples by attribute {}, found {} matching samples",
-                unfiltered.size(), attribute.getLabel() + ":" + attribute.getValue(), matchingSamples.size());
         return matchingSamples;
     }
 

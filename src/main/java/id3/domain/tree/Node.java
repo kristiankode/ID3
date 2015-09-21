@@ -35,7 +35,6 @@ public class Node {
 
     public void setClassification(NodeClass classification) {
         this.classification = classification;
-        System.out.println("Classification was set to : " + classification);
     }
 
     public NodeClass getClassification() {
@@ -50,42 +49,11 @@ public class Node {
         return subtree;
     }
 
-    public Node createLeaf(AttributeValue attributeValue, AttributeValue targetValue) {
-        Node leaf = new Node();
-        leaf.attributeValue = attributeValue;
-        if (attributeValue.equals(targetValue)) {
-            leaf.classification = NodeClass.POSITIVE;
-        } else {
-            leaf.classification = NodeClass.NEGATIVE;
-        }
-        return leaf;
-    }
-
     public void makeLeaf(AttributeValue attributeValue, NodeClass classification) {
         this.classification = classification;
         this.attributeValue = attributeValue;
         this.subtree = new ArrayList<Node>();
 
-    }
-
-    public void makeLeaf(AttributeValue attributeValue, AttributeValue targetValue) {
-
-        NodeClass nodeClass;
-
-        if (attributeValue.equals(targetValue)) {
-            nodeClass = NodeClass.POSITIVE;
-        } else {
-            nodeClass = NodeClass.NEGATIVE;
-        }
-
-        makeLeaf(attributeValue, nodeClass);
-
-    }
-
-
-    public void addLeaf(AttributeValue attributeValue, AttributeValue targetValue) {
-        Node leaf = createLeaf(attributeValue, targetValue);
-        this.addChild(leaf);
     }
 
     public void print() {

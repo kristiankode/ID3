@@ -1,6 +1,7 @@
 package id3.testdata;
 
 import id3.algorithms.DecisionTreeBuilder;
+import id3.domain.Model;
 import id3.domain.Sample;
 import id3.domain.attr.AttributeClass;
 import id3.domain.tree.Node;
@@ -33,7 +34,7 @@ public class MushroomTestData {
 
     }
 
-    public Node getMushroomModel() throws FileNotFoundException, UnsupportedEncodingException {
+    public Model getMushroomModel() throws FileNotFoundException, UnsupportedEncodingException {
         List<AttributeClass> attributes = getMushroomAttributes();
         DecisionTreeBuilder treeBuilder = new DecisionTreeBuilder();
         return treeBuilder.build(getMushroomSamples(), attributes.get(0).getPossibleValues().get(0), attributes);

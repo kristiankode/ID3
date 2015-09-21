@@ -10,6 +10,14 @@ public enum NodeClass {
 
     private final int i;
 
+    public static NodeClass fromBoolean(boolean bool) {
+        if (bool) {
+            return POSITIVE;
+        } else {
+            return NEGATIVE;
+        }
+    }
+
     NodeClass(int i) {
         this.i = i;
     }

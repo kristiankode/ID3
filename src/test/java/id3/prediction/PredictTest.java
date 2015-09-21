@@ -1,11 +1,11 @@
 package id3.prediction;
 
 import id3.algorithms.DecisionTreeBuilder;
+import id3.domain.Model;
 import id3.domain.Sample;
 import id3.domain.SampleImpl;
 import id3.domain.attr.AttributeClass;
 import id3.domain.attr.AttributeValue;
-import id3.domain.tree.Node;
 import id3.domain.tree.NodeClass;
 import id3.testdata.MushroomTestData;
 import org.junit.Test;
@@ -34,7 +34,7 @@ public class PredictTest {
         List<AttributeClass> attributes = getSunnyFridayAttributes();
         AttributeValue target = friday();
 
-        Node model = treeBuilder.build(samples, target, attributes);
+        Model model = treeBuilder.build(samples, target, attributes);
 
         Sample predictThis = new SampleImpl(sunny(), randomTemp());
 
@@ -46,7 +46,7 @@ public class PredictTest {
 
     @Test
     public void predictFriday_givenCloudy_shouldReturnNegative() {
-        Node model = treeBuilder.build(
+        Model model = treeBuilder.build(
                 getSunnyFridaySamples(), friday(), getSunnyFridayAttributes());
 
         Sample predictThis = cloudyMonday();

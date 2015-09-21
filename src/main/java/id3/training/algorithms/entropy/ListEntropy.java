@@ -1,4 +1,4 @@
-package id3.algorithms.entropy;
+package id3.training.algorithms.entropy;
 
 import id3.domain.Sample;
 import id3.domain.attr.AttributeValue;

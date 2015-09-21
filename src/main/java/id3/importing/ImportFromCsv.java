@@ -2,7 +2,7 @@ package id3.importing;
 
 import id3.domain.Sample;
 import id3.domain.attr.AttributeClass;
-import id3.importing.build.AttributeExtractor;
+import id3.importing.build.attributes.AttributeExtractor;
 import id3.importing.build.SampleBuilder;
 import id3.importing.read.BufferedCsvReader;
 

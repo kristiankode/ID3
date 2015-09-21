@@ -1,6 +1,6 @@
-package id3.algorithms.selectors.attribute;
+package id3.training.algorithms.selectors.attribute;
 
-import id3.algorithms.gain.InformationGainCalc;
+import id3.training.algorithms.gain.InformationGainCalc;
 import id3.domain.Sample;
 import id3.domain.attr.AttributeClass;
 import id3.domain.attr.AttributeValue;

@@ -1,4 +1,4 @@
-package id3.filter;
+package id3.training.filter;
 
 import id3.domain.Sample;
 import id3.domain.attr.AttributeValue;

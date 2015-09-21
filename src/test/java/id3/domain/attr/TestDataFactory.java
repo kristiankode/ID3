@@ -1,7 +1,8 @@
 package id3.domain.attr;
 
 import id3.domain.Sample;
-import id3.domain.SampleImpl;
+import id3.importing.build.SampleImpl;
+import id3.importing.build.attributes.AttrClassImpl;
 
 import java.util.ArrayList;
 import java.util.Arrays;

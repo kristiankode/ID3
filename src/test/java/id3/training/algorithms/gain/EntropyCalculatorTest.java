@@ -1,6 +1,6 @@
-package id3.algorithms.gain;
+package id3.training.algorithms.gain;
 
-import id3.algorithms.entropy.EntropyCalculator;
+import id3.training.algorithms.entropy.EntropyCalculator;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.closeTo;

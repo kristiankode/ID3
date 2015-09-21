@@ -1,4 +1,7 @@
-package id3.domain.attr;
+package id3.importing.build.attributes;
+
+import id3.domain.attr.AttributeClass;
+import id3.domain.attr.AttributeValue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +10,7 @@ import java.util.List;
  * @author kristian
  *         Created 15.09.15.
  */
-public class AttrClassImpl implements AttributeClass{
+public class AttrClassImpl implements AttributeClass {
 
     private final List<AttributeValue> possibleValues;
     private final String label;

@@ -1,5 +1,6 @@
 package id3.domain.attr;
 
+import id3.importing.build.attributes.AttrClassImpl;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;

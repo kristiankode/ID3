@@ -1,8 +1,7 @@
 package id3.importing.build;
 
 import id3.domain.Sample;
-import id3.domain.SampleImpl;
-import id3.domain.attr.AttrValueImpl;
+import id3.importing.build.attributes.AttrValueImpl;
 import id3.domain.attr.AttributeClass;
 import id3.domain.attr.AttributeValue;
 import id3.importing.read.DataReader;

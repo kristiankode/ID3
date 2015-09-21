@@ -2,7 +2,7 @@ package id3.importing;
 
 import id3.domain.Sample;
 import id3.domain.attr.AttributeClass;
-import id3.importing.build.AttributeExtractor;
+import id3.importing.build.attributes.AttributeExtractor;
 import id3.importing.build.SampleBuilder;
 import id3.importing.read.DataReader;
 import org.junit.Before;
@@ -11,7 +11,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;

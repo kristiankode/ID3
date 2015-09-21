@@ -1,10 +1,9 @@
 package id3.testdata;
 
-import id3.algorithms.DecisionTreeBuilder;
+import id3.training.algorithms.DecisionTreeBuilder;
 import id3.domain.Model;
 import id3.domain.Sample;
 import id3.domain.attr.AttributeClass;
-import id3.domain.tree.Node;
 import id3.importing.ImportFromCsv;
 import id3.importing.build.SampleBuilder;
 

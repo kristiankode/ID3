@@ -1,4 +1,4 @@
-package id3.algorithms.entropy;
+package id3.training.algorithms.entropy;
 
 /**
  * @author kristian

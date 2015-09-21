@@ -1,6 +1,6 @@
-package id3.algorithms.gain;
+package id3.training.algorithms.gain;
 
-import id3.algorithms.entropy.ListEntropy;
+import id3.training.algorithms.entropy.ListEntropy;
 import id3.domain.Sample;
 import id3.domain.attr.AttributeClass;
 import id3.domain.attr.AttributeValue;
@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import java.math.RoundingMode;
 import java.util.List;
 
-import static id3.filter.SampleFilter.filterByAttributeValue;
+import static id3.training.filter.SampleFilter.filterByAttributeValue;
 import static java.math.BigDecimal.valueOf;
 
 /**

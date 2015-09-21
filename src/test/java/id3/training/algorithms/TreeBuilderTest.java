@@ -1,4 +1,4 @@
-package id3.algorithms;
+package id3.training.algorithms;
 
 import id3.domain.Sample;
 import id3.domain.attr.AttributeClass;

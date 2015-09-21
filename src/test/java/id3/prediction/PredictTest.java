@@ -1,13 +1,13 @@
 package id3.prediction;
 
-import id3.algorithms.DecisionTreeBuilder;
 import id3.domain.Model;
 import id3.domain.Sample;
-import id3.domain.SampleImpl;
 import id3.domain.attr.AttributeClass;
 import id3.domain.attr.AttributeValue;
 import id3.domain.tree.NodeClass;
+import id3.importing.build.SampleImpl;
 import id3.testdata.MushroomTestData;
+import id3.training.algorithms.DecisionTreeBuilder;
 import org.junit.Test;
 
 import java.io.FileNotFoundException;

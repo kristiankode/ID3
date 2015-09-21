@@ -1,5 +1,6 @@
-package id3.domain;
+package id3.importing.build;
 
+import id3.domain.Sample;
 import id3.domain.attr.AttributeClass;
 import id3.domain.attr.AttributeValue;
 

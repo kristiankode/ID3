@@ -1,6 +1,6 @@
-package id3.algorithms;
+package id3.training.algorithms;
 
-import id3.algorithms.selectors.attribute.InformationGainSelector;
+import id3.training.algorithms.selectors.attribute.InformationGainSelector;
 import id3.domain.Model;
 import id3.domain.Sample;
 import id3.domain.attr.AttributeClass;
@@ -16,7 +16,7 @@ import java.util.List;
 import static id3.analysis.ValueAnalyzer.*;
 import static id3.domain.tree.NodeClass.NEGATIVE;
 import static id3.domain.tree.NodeClass.POSITIVE;
-import static id3.filter.SampleFilter.filterByAttributeValue;
+import static id3.training.filter.SampleFilter.filterByAttributeValue;
 
 /**
  * @author kristian

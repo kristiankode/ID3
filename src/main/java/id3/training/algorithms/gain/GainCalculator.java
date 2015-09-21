@@ -1,8 +1,7 @@
-package id3.algorithms.gain;
+package id3.training.algorithms.gain;
 
 import id3.domain.Sample;
 import id3.domain.attr.AttributeClass;
-import id3.domain.attr.AttributeValue;
 
 import java.util.List;
 

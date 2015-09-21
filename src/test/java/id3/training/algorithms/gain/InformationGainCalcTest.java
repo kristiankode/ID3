@@ -1,4 +1,4 @@
-package id3.algorithms.gain;
+package id3.training.algorithms.gain;
 
 import id3.domain.attr.TestDataFactory;
 import org.junit.Test;

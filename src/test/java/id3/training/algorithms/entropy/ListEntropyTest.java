@@ -1,4 +1,4 @@
-package id3.algorithms.entropy;
+package id3.training.algorithms.entropy;
 
 import id3.domain.attr.TestDataFactory;
 import org.junit.Test;

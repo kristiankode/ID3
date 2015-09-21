@@ -1,4 +1,7 @@
-package id3.domain.attr;
+package id3.importing.build.attributes;
+
+import id3.domain.attr.AttributeClass;
+import id3.domain.attr.AttributeValue;
 
 /**
  * @author kristian

@@ -1,9 +1,8 @@
-package id3.importing.build;
+package id3.importing.build.attributes;
 
-import id3.domain.attr.AttrClassImpl;
-import id3.domain.attr.AttrValueImpl;
 import id3.domain.attr.AttributeClass;
 import id3.domain.attr.AttributeValue;
+import id3.importing.build.SampleBuilder;
 import id3.importing.read.DataReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

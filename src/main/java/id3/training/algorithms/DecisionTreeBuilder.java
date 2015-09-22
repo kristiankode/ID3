@@ -72,7 +72,7 @@ public class DecisionTreeBuilder {
 
             for (AttributeValue possibleValue : bestAttr.getPossibleValues()) {
 
-                Node attributeNode = new Node();
+                Node attributeNode = new Node(root);
                 attributeNode.setAttributeValue(possibleValue);
 
                 List<Sample> matchingSamples = filterByAttributeValue(allSamples, possibleValue);

@@ -12,10 +12,20 @@ import java.util.List;
 public class Node {
 
     List<Node> subtree = new ArrayList<Node>();
+    final Node parent;
 
     NodeClass classification;
 
     AttributeValue attributeValue; // the attribute represented by this node
+
+    public Node() {
+        // root node, no parent
+        this.parent = null;
+    }
+
+    public Node(Node parent) {
+        this.parent = parent;
+    }
 
     public AttributeValue getAttributeValue() {
         return attributeValue;
@@ -47,6 +57,10 @@ public class Node {
 
     public List<Node> getChildren() {
         return subtree;
+    }
+
+    public Node getParent(){
+        return parent;
     }
 
     public void makeLeaf(AttributeValue attributeValue, NodeClass classification) {
@@ -85,6 +99,10 @@ public class Node {
         }
 
         return nodeString;
+    }
+
+    public String toString() {
+        return this.description();
     }
 
 }

@@ -30,7 +30,7 @@ public class AttrValueImpl implements AttributeValue {
     }
 
     public String toString() {
-        return getLabel() + ":" + value;
+        return getLabel() + " = " + value;
     }
 
     @Override

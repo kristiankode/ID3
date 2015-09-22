@@ -10,6 +10,8 @@ import id3.prediction.analysis.PredictionEvaluator;
 import id3.testdata.MushroomTestData;
 import id3.training.algorithms.DecisionTreeBuilder;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
@@ -25,11 +27,13 @@ import static org.junit.Assert.assertThat;
  * @author kristian
  *         Created 21.09.15.
  */
-public class PredictTest {
+public class PredictUsingRulesTest {
+
+    static final Logger log = LoggerFactory.getLogger(PredictUsingRulesTest.class);
 
     public static final double acceptableError = 0.001;
     DecisionTreeBuilder treeBuilder = new DecisionTreeBuilder();
-    Predict instance = new Predict();
+    Predictor instance = new PredictUsingRules();
 
     @Test
     public void predictFriday_givenSunny_shouldReturnPositive() {
@@ -43,7 +47,7 @@ public class PredictTest {
         Sample predictThis = new SampleImpl(sunny(), randomTemp());
 
         NodeClass expected = NodeClass.POSITIVE,
-                actual = instance.predictClass(model, predictThis);
+                actual = instance.predictSample(model, predictThis).getPredictedValue();
 
         assertThat(actual, is(expected));
     }
@@ -75,6 +79,11 @@ public class PredictTest {
         Double expectedAccuracy = 93.333,
                 actual = PredictionEvaluator.evaluatePredictionAccuracy(predictions, model.getTargetAttribute());
 
+        log.debug("Predictions:");
+        for (Prediction p : predictions) {
+            log.debug(p.toString());
+        }
+
         assertThat(actual, closeTo(expectedAccuracy, acceptableError));
     }
 
@@ -87,7 +96,7 @@ public class PredictTest {
         Sample predictThis = cloudyMonday();
 
         NodeClass expected = NodeClass.NEGATIVE,
-                actual = instance.predictClass(model, predictThis);
+                actual = instance.predictSample(model, predictThis).getPredictedValue();
         assertThat(actual, is(expected));
     }
 
@@ -97,7 +106,7 @@ public class PredictTest {
         MushroomTestData data = new MushroomTestData();
 
         NodeClass expected = NodeClass.NEGATIVE,
-                actual = instance.predictClass(data.getMushroomModel(), data.sampleWithHabitatU());
+                actual = instance.predictSample(data.getMushroomModel(), data.sampleWithHabitatU()).getPredictedValue();
 
         assertThat(actual, is(expected));
     }

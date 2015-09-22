@@ -32,6 +32,15 @@ public class SampleImpl implements Sample {
         return getAttribute(attributeClass) != null;
     }
 
+    public boolean hasAttributeValue(AttributeValue val) {
+        for (AttributeValue value : attributes) {
+            if (value.equals(val)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public AttributeValue getAttribute(AttributeClass label) {
         for (AttributeValue attr : attributes) {
             if (attr.getAttributeClass().equals(label)) {

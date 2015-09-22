@@ -1,5 +1,6 @@
 package id3.prediction;
 
+import id3.domain.Rule;
 import id3.domain.Sample;
 import id3.domain.tree.NodeClass;
 
@@ -11,11 +12,19 @@ public class Prediction {
 
     final Sample sample;
     final NodeClass predictedValue;
+    final Rule reason;
 
 
     public Prediction(Sample sample, NodeClass predictedValue) {
         this.sample = sample;
         this.predictedValue = predictedValue;
+        reason = null;
+    }
+
+    public Prediction(Sample sample, NodeClass predictedValue, Rule reason) {
+        this.sample = sample;
+        this.predictedValue = predictedValue;
+        this.reason = reason;
     }
 
     public Sample getSample() {
@@ -24,5 +33,9 @@ public class Prediction {
 
     public NodeClass getPredictedValue() {
         return predictedValue;
+    }
+
+    public String toString(){
+        return sample + " predicted as " + predictedValue + " because of rule [" + reason +"]";
     }
 }

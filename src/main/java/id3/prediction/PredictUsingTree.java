@@ -16,15 +16,15 @@ import java.util.List;
  * @author kristian
  *         Created 21.09.15.
  */
-public class Predict {
-    Logger log = LoggerFactory.getLogger(Predict.class);
+public class PredictUsingTree implements Predictor {
+    Logger log = LoggerFactory.getLogger(PredictUsingTree.class);
 
     public List<Prediction> predict(Model model, List<Sample> unseenSamples) {
 
         List<Prediction> predictions = new ArrayList<Prediction>();
 
         for (Sample sample : unseenSamples) {
-            Prediction result = new Prediction(sample, predictClass(model, sample));
+            Prediction result = predictSample(model, sample);
             predictions.add(result);
         }
 
@@ -33,9 +33,9 @@ public class Predict {
         return predictions;
     }
 
-    public NodeClass predictClass(Model model, Sample sample) {
+    public Prediction predictSample(Model model, Sample sample) {
 
-        return predictRecursively(model.getTree(), sample);
+        return new Prediction(sample, predictRecursively(model.getTree(), sample));
     }
 
     private NodeClass predictRecursively(Node model, Sample sample) {

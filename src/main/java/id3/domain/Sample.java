@@ -13,6 +13,8 @@ public interface Sample {
 
     boolean hasAttribute(AttributeClass attribute);
 
+    boolean hasAttributeValue(AttributeValue val);
+
     AttributeValue getAttribute(AttributeClass label);
     List<AttributeValue> getAttributes();
 

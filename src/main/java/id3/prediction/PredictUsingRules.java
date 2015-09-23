@@ -23,13 +23,18 @@ public class PredictUsingRules implements Predictor {
 
     public List<Prediction> predict(Model model, List<Sample> unseenSamples) {
         List<Rule> rules = ruleBuilder.build(model);
-        List<Prediction> predictions = new ArrayList<Prediction>();
-
-        for (Sample sample : unseenSamples) {
-            predictions.add(predictSample(rules, sample));
-        }
+        List<Prediction> predictions = predict(rules, unseenSamples);
 
         PredictionEvaluator.evaluatePredictionAccuracy(predictions, model.getTargetAttribute());
+
+        return predictions;
+    }
+
+    public List<Prediction> predict(List<Rule> rules, List<Sample> samples) {
+        List<Prediction> predictions = new ArrayList<Prediction>();
+        for (Sample sample : samples) {
+            predictions.add(predictSample(rules, sample));
+        }
 
         return predictions;
     }

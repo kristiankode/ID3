@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -29,6 +30,22 @@ public class RuleBuilder {
         }
 
         return rules;
+    }
+
+    /**
+     * Creates a new rule based on an existing rule. Used for pruning.
+     * @param rule
+     * @param attributesToRemove Attributes that should not be included in the new rule.
+     * @return
+     */
+    public Rule build(Rule rule, AttributeValue... attributesToRemove){
+        RuleImpl newRule = new RuleImpl(rule.getTargetValue());
+        newRule.getPreconditions().addAll(rule.getPreconditions());
+        newRule.getPreconditions().removeAll(Arrays.asList(attributesToRemove));
+
+        newRule.setPostCondition(rule.getPostCondition());
+
+        return newRule;
     }
 
     List<Rule> getRules(Node node, AttributeValue target) {

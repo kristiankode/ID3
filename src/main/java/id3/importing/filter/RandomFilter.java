@@ -17,7 +17,7 @@ import static java.math.BigDecimal.valueOf;
  *         Created 17.09.15.
  */
 public class RandomFilter {
-    Logger log = LoggerFactory.getLogger(RandomFilter.class);
+    private final Logger log = LoggerFactory.getLogger(RandomFilter.class);
 
     /**
      * Creates a random subset of samples.

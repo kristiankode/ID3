@@ -15,6 +15,7 @@ import static id3.domain.tree.NodeClass.POSITIVE;
  * @author kristian
  *         Created 16.09.15.
  */
+@SuppressWarnings("unused")
 public class ValueAnalyzer {
     static Logger log = LoggerFactory.getLogger(ValueAnalyzer.class);
 

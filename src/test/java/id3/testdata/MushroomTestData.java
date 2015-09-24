@@ -20,23 +20,23 @@ import java.util.List;
  *         Created 21.09.15.
  */
 public class MushroomTestData {
-    public static final double DEFAULT_PERCENTAGE_FOR_VALIDATION = 25.0;
-    Logger log = LoggerFactory.getLogger(MushroomTestData.class);
+    private static final double DEFAULT_PERCENTAGE_FOR_VALIDATION = 25.0;
+    private final Logger log = LoggerFactory.getLogger(MushroomTestData.class);
 
-    static final String filePath = ImportFromCsv.class.getClassLoader().getResource("shrooms.csv").getPath();
-    static final RandomFilter filter = new RandomFilter();
+    @SuppressWarnings("ConstantConditions") private static final String filePath = ImportFromCsv.class.getClassLoader().getResource("shrooms.csv").getPath();
+    private static final RandomFilter filter = new RandomFilter();
 
-    List<Sample> validationSet;
-    List<Sample> trainingSet;
+    private List<Sample> validationSet;
+    private List<Sample> trainingSet;
 
-    public List<AttributeClass> getMushroomAttributes()
-            throws FileNotFoundException, UnsupportedEncodingException {
+    private List<AttributeClass> getMushroomAttributes()
+            throws FileNotFoundException {
         ImportFromCsv csvImport = new ImportFromCsv(filePath);
         return csvImport.retrieveAttributes();
     }
 
     public List<Sample> getAllMushroomSamples()
-            throws FileNotFoundException, UnsupportedEncodingException {
+            throws FileNotFoundException {
 
         ImportFromCsv csvImport = new ImportFromCsv(filePath);
         return csvImport.retrieveSamples(getMushroomAttributes());
@@ -65,7 +65,7 @@ public class MushroomTestData {
         }
     }
 
-    public List<Sample> getTrainingSet() throws FileNotFoundException, UnsupportedEncodingException {
+    private List<Sample> getTrainingSet() throws FileNotFoundException, UnsupportedEncodingException {
         loadDataIfNecessary();
         return trainingSet;
     }
@@ -81,7 +81,7 @@ public class MushroomTestData {
     }
 
     public Sample sampleWithHabitatU()
-            throws FileNotFoundException, UnsupportedEncodingException {
+            throws FileNotFoundException {
         SampleBuilder sampleBuilder = new SampleBuilder();
         String
                 classification = "e",

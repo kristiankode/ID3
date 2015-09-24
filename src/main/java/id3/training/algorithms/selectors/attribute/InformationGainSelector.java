@@ -1,5 +1,6 @@
 package id3.training.algorithms.selectors.attribute;
 
+import id3.training.algorithms.gain.GainCalculator;
 import id3.training.algorithms.gain.InformationGainCalc;
 import id3.domain.Sample;
 import id3.domain.attr.AttributeClass;
@@ -16,9 +17,9 @@ import java.util.List;
  *         Created 15.09.15.
  */
 public class InformationGainSelector {
-    final static Logger log = LoggerFactory.getLogger(InformationGainSelector.class);
-    final InformationGainCalc informationGainCalc;
-    final AttributeValue targetAttribute;
+    private final static Logger log = LoggerFactory.getLogger(InformationGainSelector.class);
+    private final GainCalculator informationGainCalc;
+    private final AttributeValue targetAttribute;
 
     public InformationGainSelector(AttributeValue targetAttribute) {
         this.targetAttribute = targetAttribute;

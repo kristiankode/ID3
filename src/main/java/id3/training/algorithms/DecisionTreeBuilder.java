@@ -23,9 +23,9 @@ import static id3.training.filter.SampleFilter.filterByAttributeValue;
  *         Created 15.09.15.
  */
 public class DecisionTreeBuilder {
-    final static Logger log = LoggerFactory.getLogger(DecisionTreeBuilder.class);
+    private final static Logger log = LoggerFactory.getLogger(DecisionTreeBuilder.class);
 
-    InformationGainSelector attributeSelector;
+    private InformationGainSelector attributeSelector;
 
     public Model build(List<Sample> allSamples, AttributeValue targetAttribute, List<AttributeClass> attributes) {
         System.out.println("Building decision tree for answering: Is it " + targetAttribute.getValue() + "?");

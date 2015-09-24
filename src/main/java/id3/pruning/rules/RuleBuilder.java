@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class RuleBuilder {
 
-    Logger log = LoggerFactory.getLogger(RuleBuilder.class);
+    private final Logger log = LoggerFactory.getLogger(RuleBuilder.class);
 
     public List<Rule> build(Model model) {
 
@@ -105,7 +105,7 @@ public class RuleBuilder {
 
         public static final String AND = " AND ";
         private NodeClass postCondition;
-        private List<AttributeValue> preconditions = new ArrayList<AttributeValue>();
+        private final List<AttributeValue> preconditions = new ArrayList<AttributeValue>();
         private final AttributeValue targetValue;
 
         public RuleImpl(AttributeValue target) {

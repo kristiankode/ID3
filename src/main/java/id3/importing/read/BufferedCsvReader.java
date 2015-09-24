@@ -12,17 +12,17 @@ import java.io.*;
 public class BufferedCsvReader implements DataReader {
     private final static Logger log = LoggerFactory.getLogger(BufferedCsvReader.class);
 
-    final String inputFilePath;
-    BufferedReader bufferedReader;
+    private final String inputFilePath;
+    private BufferedReader bufferedReader;
 
-    public static final String
+    private boolean readingStarted = false;
+    private static final String
             BLANK_SPACE_BABY = " ",
             COMMA_CHAMELEON = ",",
             EMPTY_STRING = "";
-    private boolean readingStarted = false;
 
     public BufferedCsvReader(String inputFilePath)
-            throws FileNotFoundException, UnsupportedEncodingException {
+            throws FileNotFoundException {
         this.inputFilePath = inputFilePath;
         Reader reader = new InputStreamReader(
                 new FileInputStream(inputFilePath));
@@ -71,7 +71,7 @@ public class BufferedCsvReader implements DataReader {
         return row;
     }
 
-    String[] createRow(String line) {
+    private String[] createRow(String line) {
         String[] row = null;
         if (line != null) {
             if (readingStarted) { // don't sanitize header
@@ -82,7 +82,7 @@ public class BufferedCsvReader implements DataReader {
         return row;
     }
 
-    String[] convertToArray(String line) {
+    private String[] convertToArray(String line) {
         String[] row = line.split(COMMA_CHAMELEON);
         return row.length > 1 ? row : null;
     }
@@ -90,7 +90,7 @@ public class BufferedCsvReader implements DataReader {
     /**
      * Removes unwanted characters form a data row
      */
-    String sanitizeData(String line) {
+    private String sanitizeData(String line) {
         return line.replace(BLANK_SPACE_BABY, EMPTY_STRING);
     }
 

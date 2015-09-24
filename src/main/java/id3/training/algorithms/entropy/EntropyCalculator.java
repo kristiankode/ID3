@@ -18,7 +18,7 @@ public class EntropyCalculator {
         return posEn + negEn;
     }
 
-    public double log2(double number) {
+    private double log2(double number) {
         if (number == 0) { // log2 of 0 is defined to be zero.
             return 0;
         } else {

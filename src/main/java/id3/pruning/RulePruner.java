@@ -21,10 +21,10 @@ import java.util.Map;
  *         Created 22.09.15.
  */
 public class RulePruner {
-    Logger log = LoggerFactory.getLogger(RulePruner.class);
+    private final Logger log = LoggerFactory.getLogger(RulePruner.class);
 
-    final PredictUsingRules predictor = new PredictUsingRules();
-    final RuleBuilder ruleBuilder = new RuleBuilder();
+    private final PredictUsingRules predictor = new PredictUsingRules();
+    private final RuleBuilder ruleBuilder = new RuleBuilder();
 
     public List<Rule> pruneRepeatedly(Model model, List<Sample> pruningSet) {
         List<Rule> allRules = ruleBuilder.build(model);
@@ -43,7 +43,7 @@ public class RulePruner {
         return prunedRules;
     }
 
-    List<PruningResult> prune(List<PruningResult> prevResult, List<Sample> pruningSet) {
+    private List<PruningResult> prune(List<PruningResult> prevResult, List<Sample> pruningSet) {
         List<PruningResult> newResults = new ArrayList<PruningResult>();
         for (PruningResult pr : prevResult) {
             Rule doublePruned =
@@ -56,15 +56,16 @@ public class RulePruner {
         return newResults;
     }
 
-    void updateResults(List<PruningResult> tempResults, List<PruningResult> resultsToUpdate){
+    private void updateResults(List<PruningResult> tempResults, List<PruningResult> resultsToUpdate){
         for(PruningResult pr : tempResults){
             PruningResult existing = findResultByRule(resultsToUpdate, pr.unprunedRule);
+            assert existing != null;
             existing.setPrunedRule(pr.prunedRule);
         }
 
     }
 
-    List<PruningResult> initResults(List<Rule> allRules) {
+    private List<PruningResult> initResults(List<Rule> allRules) {
         List<PruningResult> results = new ArrayList<PruningResult>();
         for (Rule rule : allRules) {
             results.add(new PruningResult(rule, rule));
@@ -72,7 +73,7 @@ public class RulePruner {
         return results;
     }
 
-    PruningResult findResultByRule(List<PruningResult> results, Rule rule) {
+    private PruningResult findResultByRule(List<PruningResult> results, Rule rule) {
         for (PruningResult pr : results) {
             if (pr.getUnprunedRule().equals(rule)) {
                 return pr;
@@ -90,7 +91,7 @@ public class RulePruner {
     /**
      * Prune a single rule, if possible. Returns null if rule cannot be pruned further.
      */
-    Rule pruneRule(Rule ruleToPrune, List<Rule> allRules, List<Sample> validationSet, AttributeValue target) {
+    private Rule pruneRule(Rule ruleToPrune, List<Rule> allRules, List<Sample> validationSet, AttributeValue target) {
 
         List<Prediction> originalPrediction = predictor.predict(allRules, validationSet);
         double originalPerformance =
@@ -138,7 +139,7 @@ public class RulePruner {
         return bestRule;
     }
 
-    List<Rule> extractRules(List<PruningResult> results) {
+    private List<Rule> extractRules(List<PruningResult> results) {
         List<Rule> rules = new ArrayList<Rule>();
         for (PruningResult pr : results) {
             rules.add(pr.getPrunedRule());

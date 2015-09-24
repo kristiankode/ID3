@@ -28,9 +28,9 @@ import static org.junit.Assert.assertThat;
  */
 public class PredictUsingTreeTest {
 
-    public static final double acceptableError = 0.001;
-    DecisionTreeBuilder treeBuilder = new DecisionTreeBuilder();
-    PredictUsingTree instance = new PredictUsingTree();
+    private static final double acceptableError = 0.001;
+    private final DecisionTreeBuilder treeBuilder = new DecisionTreeBuilder();
+    private final PredictUsingTree instance = new PredictUsingTree();
 
     @Test
     public void predictFriday_givenSunny_shouldReturnPositive() {

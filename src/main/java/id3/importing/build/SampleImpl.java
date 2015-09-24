@@ -14,18 +14,10 @@ import java.util.List;
  */
 public class SampleImpl implements Sample {
 
-    List<AttributeValue> attributes = new ArrayList<AttributeValue>();
+    private List<AttributeValue> attributes = new ArrayList<AttributeValue>();
 
     public SampleImpl(AttributeValue... attributes) {
         this.attributes = Arrays.asList(attributes);
-    }
-
-    public boolean isPositive() {
-        return false;
-    }
-
-    public boolean isAttributesEmpty() {
-        return attributes.isEmpty();
     }
 
     public boolean hasAttribute(AttributeClass attributeClass) {
@@ -52,10 +44,6 @@ public class SampleImpl implements Sample {
 
     public List<AttributeValue> getAttributes() {
         return attributes;
-    }
-
-    public AttributeClass getBestAttribute() {
-        return attributes.get(0).getAttributeClass();
     }
 
     public String toString() {

@@ -12,8 +12,8 @@ import static org.junit.Assert.assertThat;
  */
 public class InformationGainCalcTest {
 
-    public static final double acceptableError = 0.001;
-    InformationGainCalc instance = new InformationGainCalc(TestDataFactory.niceDayForTennis());
+    private static final double acceptableError = 0.001;
+    private final InformationGainCalc instance = new InformationGainCalc(TestDataFactory.niceDayForTennis());
 
     @Test
     public void infoGain_givenTennisDataAndWeatherAttribute_shouldReturn0246() {

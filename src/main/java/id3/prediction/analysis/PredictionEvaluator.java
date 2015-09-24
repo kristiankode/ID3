@@ -19,7 +19,7 @@ import static java.math.BigDecimal.valueOf;
 public class PredictionEvaluator {
     static Logger log = LoggerFactory.getLogger(PredictionEvaluator.class);
 
-    public static boolean isPredictionCorrect(Prediction prediction, AttributeValue target) {
+    private static boolean isPredictionCorrect(Prediction prediction, AttributeValue target) {
         NodeClass correctPrediction =
                 NodeClass.fromBoolean(sampleMatchesTarget(prediction.getSample(), target));
 

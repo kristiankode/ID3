@@ -18,11 +18,11 @@ import java.util.List;
  *         Created 22.09.15.
  */
 public class RuleBuilderTest {
-    Logger log = LoggerFactory.getLogger(RuleBuilderTest.class);
+    private final Logger log = LoggerFactory.getLogger(RuleBuilderTest.class);
 
-    RuleBuilder instance = new RuleBuilder();
-    MushroomTestData data = new MushroomTestData();
-    Model model;
+    private final RuleBuilder instance = new RuleBuilder();
+    private final MushroomTestData data = new MushroomTestData();
+    private Model model;
 
     @Before
     public void setUp() throws Exception {
@@ -49,7 +49,7 @@ public class RuleBuilderTest {
         }
     }
 
-    String getParents(Node leaf) {
+    private String getParents(Node leaf) {
         Node parent = leaf;
 
         String parents = "";

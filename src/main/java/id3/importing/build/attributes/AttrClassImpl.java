@@ -26,10 +26,6 @@ public class AttrClassImpl implements AttributeClass {
         this.possibleValues = tmpVals;
     }
 
-    public void addPossibleValue(AttributeValue value) {
-        possibleValues.add(value);
-    }
-
     public List<AttributeValue> getPossibleValues() {
         return possibleValues;
     }

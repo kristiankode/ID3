@@ -29,11 +29,11 @@ import static org.junit.Assert.assertThat;
  */
 public class PredictUsingRulesTest {
 
-    static final Logger log = LoggerFactory.getLogger(PredictUsingRulesTest.class);
+    private static final Logger log = LoggerFactory.getLogger(PredictUsingRulesTest.class);
 
-    public static final double acceptableError = 0.001;
-    DecisionTreeBuilder treeBuilder = new DecisionTreeBuilder();
-    Predictor instance = new PredictUsingRules();
+    private static final double acceptableError = 0.001;
+    private final DecisionTreeBuilder treeBuilder = new DecisionTreeBuilder();
+    private final Predictor instance = new PredictUsingRules();
 
     @Test
     public void predictFriday_givenSunny_shouldReturnPositive() {

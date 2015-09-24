@@ -17,7 +17,7 @@ import java.util.List;
 public class AttributeExtractor {
     final static Logger log = LoggerFactory.getLogger(SampleBuilder.class);
 
-    List<AttributeClass> attributes = new ArrayList<AttributeClass>();
+    private List<AttributeClass> attributes = new ArrayList<AttributeClass>();
 
     public List<AttributeClass> getAllAttributes(DataReader reader) {
 
@@ -47,7 +47,7 @@ public class AttributeExtractor {
         }
     }
 
-    List<AttributeClass> identifyAttributes(String[] attributeLabels) {
+    private List<AttributeClass> identifyAttributes(String[] attributeLabels) {
         List<AttributeClass> attrClasses = new ArrayList<AttributeClass>();
 
         for (String s : attributeLabels) {

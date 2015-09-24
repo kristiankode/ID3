@@ -17,7 +17,7 @@ import java.util.List;
  *         Created 21.09.15.
  */
 public class PredictUsingTree implements Predictor {
-    Logger log = LoggerFactory.getLogger(PredictUsingTree.class);
+    private final Logger log = LoggerFactory.getLogger(PredictUsingTree.class);
 
     public List<Prediction> predict(Model model, List<Sample> unseenSamples) {
 

@@ -27,22 +27,22 @@ public class SampleBuilderTest {
     @Mock
     DataReader reader;
 
-    final String
-            head1 = "Edible?",
-            head2 = "Color",
-            head3 = "Taste";
+    private final String
+            head1 = "Edible?";
+    private final String head2 = "Color";
+    private final String head3 = "Taste";
 
-    final String
-            row1col1 = "Edible",
-            row1col2 = "Red",
-            row1col3 = "Tasty";
+    private final String
+            row1col1 = "Edible";
+    private final String row1col2 = "Red";
+    private final String row1col3 = "Tasty";
 
-    final String
-            row2col1 = "Venomous poision",
-            row2col2 = "Blue",
-            row2col3 = "Disgusting";
+    private final String
+            row2col1 = "Venomous poison";
+    private final String row2col2 = "Blue";
+    private final String row2col3 = "Disgusting";
 
-    SampleBuilder instance = new SampleBuilder();
+    private final SampleBuilder instance = new SampleBuilder();
 
     @Before
     public void setup() {
@@ -51,7 +51,7 @@ public class SampleBuilderTest {
                 new String[]{row1col1, row1col2, row1col3},
                 new String[]{row2col1, row2col2, row2col3},
                 null,
-                new String[]{row1col1, row1col2, row1col3},// dataset repeated twice, because unable to mock "reader.startFromTop"
+                new String[]{row1col1, row1col2, row1col3},// data set repeated twice, because unable to mock "reader.startFromTop"
                 new String[]{row2col1, row2col2, row2col3},
                 null);
     }

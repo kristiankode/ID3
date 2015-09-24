@@ -11,7 +11,7 @@ import static org.junit.Assert.assertThat;
  */
 public class RandomFilterTest {
 
-    RandomFilter instance = new RandomFilter();
+    private final RandomFilter instance = new RandomFilter();
 
     @Test
     public void calculateTargetSize_given10PercentOf100Unfiltered_expect10() {

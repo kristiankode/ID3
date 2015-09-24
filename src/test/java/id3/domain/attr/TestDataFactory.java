@@ -16,12 +16,12 @@ import java.util.Random;
 public class TestDataFactory {
 
     public final static AttributeClass
-            weather = new AttrClassImpl("Weather", "Rainy", "Sunny", "Cloudy"),
-            temperature = new AttrClassImpl("Temperature", "Hot", "Cool", "Mild"),
-            wind = new AttrClassImpl("Wind", "Weak", "Strong"),
-            humidity = new AttrClassImpl("Humidity", "High", "Normal"),
-            playTennis = new AttrClassImpl("Tennis potential", "a nice day for tennis", "a horrible day for tennis"),
-            weekday = new AttrClassImpl("Weekday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
+            weather = new AttrClassImpl("Weather", "Rainy", "Sunny", "Cloudy");
+    private final static AttributeClass temperature = new AttrClassImpl("Temperature", "Hot", "Cool", "Mild");
+    private final static AttributeClass wind = new AttrClassImpl("Wind", "Weak", "Strong");
+    private final static AttributeClass humidity = new AttrClassImpl("Humidity", "High", "Normal");
+    private final static AttributeClass playTennis = new AttrClassImpl("Tennis potential", "a nice day for tennis", "a horrible day for tennis");
+    private final static AttributeClass weekday = new AttrClassImpl("Weekday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
 
 
     public static List<Sample> getTennisSamples() {
@@ -62,7 +62,7 @@ public class TestDataFactory {
         return new ArrayList<AttributeClass>(Arrays.asList(weather, temperature, weekday));
     }
 
-    public static Sample rainyMonday() {
+    private static Sample rainyMonday() {
         return new SampleImpl(rainy(), monday(), randomTemp());
     }
 
@@ -70,7 +70,7 @@ public class TestDataFactory {
         return new SampleImpl(cloudy(), monday(), randomTemp());
     }
 
-    public static Sample sunnyFriday() {
+    private static Sample sunnyFriday() {
         return new SampleImpl(sunny(), friday(), randomTemp());
     }
 
@@ -82,7 +82,7 @@ public class TestDataFactory {
         return weekday.getPossibleValues().get(4);
     }
 
-    public static AttributeValue rainy() {
+    private static AttributeValue rainy() {
         return weather.getPossibleValues().get(0);
     }
 
@@ -98,15 +98,15 @@ public class TestDataFactory {
         return temperature.getPossibleValues().get(0);
     }
 
-    public static AttributeValue cool() {
+    private static AttributeValue cool() {
         return temperature.getPossibleValues().get(1);
     }
 
-    public static AttributeValue mild() {
+    private static AttributeValue mild() {
         return temperature.getPossibleValues().get(2);
     }
 
-    public static AttributeValue weakWind() {
+    private static AttributeValue weakWind() {
         return wind.getPossibleValues().get(0);
     }
 
@@ -118,7 +118,7 @@ public class TestDataFactory {
         return humidity.getPossibleValues().get(0);
     }
 
-    public static AttributeValue normalHumidity() {
+    private static AttributeValue normalHumidity() {
         return humidity.getPossibleValues().get(1);
     }
 

@@ -11,12 +11,12 @@ import java.util.List;
  */
 public class Node {
 
-    List<Node> subtree = new ArrayList<Node>();
-    final Node parent;
+    private List<Node> subtree = new ArrayList<Node>();
+    private final Node parent;
 
-    NodeClass classification;
+    private NodeClass classification;
 
-    AttributeValue attributeValue; // the attribute represented by this node
+    private AttributeValue attributeValue; // the attribute represented by this node
 
     public Node() {
         // root node, no parent

@@ -6,9 +6,7 @@ package id3.domain.tree;
  */
 public enum NodeClass {
 
-    POSITIVE(1), NEGATIVE(-1);
-
-    private final int i;
+    POSITIVE, NEGATIVE;
 
     public static NodeClass fromBoolean(boolean bool) {
         if (bool) {
@@ -16,9 +14,5 @@ public enum NodeClass {
         } else {
             return NEGATIVE;
         }
-    }
-
-    NodeClass(int i) {
-        this.i = i;
     }
 }

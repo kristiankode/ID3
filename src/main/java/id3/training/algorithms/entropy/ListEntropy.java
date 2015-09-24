@@ -16,7 +16,7 @@ import static id3.analysis.ValueAnalyzer.sampleMatchesTarget;
 public class ListEntropy {
     final static Logger log = LoggerFactory.getLogger(ListEntropy.class);
 
-    EntropyCalculator entropy = new EntropyCalculator();
+    private final EntropyCalculator entropy = new EntropyCalculator();
 
     public double calculateEntropy(List<Sample> samples, AttributeValue targetAttribute) {
         int positive = countPositiveSamples(samples, targetAttribute);
@@ -25,7 +25,7 @@ public class ListEntropy {
         return entropy.calc(positive, negative);
     }
 
-    int countPositiveSamples(List<Sample> samples, AttributeValue target) {
+    private int countPositiveSamples(List<Sample> samples, AttributeValue target) {
         int count = 0;
         for (Sample sample : samples) {
             if (sampleMatchesTarget(sample, target)) {
@@ -35,7 +35,7 @@ public class ListEntropy {
         return count;
     }
 
-    int countNegativeSamples(List<Sample> samples, AttributeValue target) {
+    private int countNegativeSamples(List<Sample> samples, AttributeValue target) {
         int count = 0;
         for (Sample sample : samples) {
             if (!sampleMatchesTarget(sample, target)) {

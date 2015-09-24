@@ -2,16 +2,13 @@ package id3.importing;
 
 import id3.domain.Sample;
 import id3.domain.attr.AttributeClass;
-import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
-import java.util.jar.Attributes;
 
-import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -21,10 +18,11 @@ import static org.junit.Assert.assertThat;
  */
 public class ImportFromCsvTest {
 
-    ImportFromCsv instance;
+    private ImportFromCsv instance;
 
     @Before
     public void setup() throws FileNotFoundException, UnsupportedEncodingException {
+        //noinspection ConstantConditions
         instance = new ImportFromCsv(ImportFromCsv.class.getClassLoader().getResource("shrooms.csv").getPath());
     }
 

@@ -2,12 +2,11 @@ package id3.importing;
 
 import id3.domain.Sample;
 import id3.domain.attr.AttributeClass;
-import id3.importing.build.attributes.AttributeExtractor;
 import id3.importing.build.SampleBuilder;
+import id3.importing.build.attributes.AttributeExtractor;
 import id3.importing.read.BufferedCsvReader;
 
 import java.io.FileNotFoundException;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
@@ -16,10 +15,10 @@ import java.util.List;
  */
 public class ImportFromCsv {
 
-    final BufferedCsvReader reader;
+    private final BufferedCsvReader reader;
 
     public ImportFromCsv(String filePath)
-            throws FileNotFoundException, UnsupportedEncodingException {
+            throws FileNotFoundException {
         this.reader = new BufferedCsvReader(filePath);
     }
 

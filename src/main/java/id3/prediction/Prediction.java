@@ -10,9 +10,9 @@ import id3.domain.tree.NodeClass;
  */
 public class Prediction {
 
-    final Sample sample;
-    final NodeClass predictedValue;
-    final Rule reason;
+    private final Sample sample;
+    private final NodeClass predictedValue;
+    private final Rule reason;
 
 
     public Prediction(Sample sample, NodeClass predictedValue) {

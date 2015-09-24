@@ -16,6 +16,4 @@ public interface Rule {
     NodeClass getPostCondition();
 
     AttributeValue getTargetValue();
-
-    void setPostCondition(NodeClass classification);
 }

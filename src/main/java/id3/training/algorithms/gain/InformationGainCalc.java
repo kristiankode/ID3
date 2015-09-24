@@ -22,8 +22,8 @@ import static java.math.BigDecimal.valueOf;
 public class InformationGainCalc implements GainCalculator {
     final static Logger log = LoggerFactory.getLogger(InformationGainCalc.class);
 
-    static final ListEntropy entropyCalc = new ListEntropy();
-    public static final int PRECISION = 4;
+    private static final ListEntropy entropyCalc = new ListEntropy();
+    private static final int PRECISION = 4;
 
     private final AttributeValue targetAttribute;
 

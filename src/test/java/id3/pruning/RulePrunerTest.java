@@ -24,11 +24,11 @@ import static org.junit.Assert.assertThat;
  *         Created 24.09.15.
  */
 public class RulePrunerTest {
-    Logger log = LoggerFactory.getLogger(RulePrunerTest.class);
+    private final Logger log = LoggerFactory.getLogger(RulePrunerTest.class);
 
-    RulePruner pruner = new RulePruner();
-    PredictUsingRules predictor = new PredictUsingRules();
-    MushroomTestData data = new MushroomTestData();
+    private final RulePruner pruner = new RulePruner();
+    private final PredictUsingRules predictor = new PredictUsingRules();
+    private final MushroomTestData data = new MushroomTestData();
 
     @Test
     public void prune_givenValidationDataSameAsTrainingData_expect100Percent()

@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
  */
 public class ListEntropyTest {
 
-    ListEntropy instance = new ListEntropy();
+    private final ListEntropy instance = new ListEntropy();
     private static final double acceptableError = 0.001;
 
     @Test

@@ -17,9 +17,9 @@ import java.util.List;
  *         Created 22.09.15.
  */
 public class PredictUsingRules implements Predictor {
-    Logger log = LoggerFactory.getLogger(PredictUsingRules.class);
+    private final Logger log = LoggerFactory.getLogger(PredictUsingRules.class);
 
-    final RuleBuilder ruleBuilder = new RuleBuilder();
+    private final RuleBuilder ruleBuilder = new RuleBuilder();
 
     public List<Prediction> predict(Model model, List<Sample> unseenSamples) {
         List<Rule> rules = ruleBuilder.build(model);

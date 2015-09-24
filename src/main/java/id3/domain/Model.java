@@ -14,9 +14,9 @@ import java.util.List;
  */
 public class Model {
 
-    final Node tree;
-    final List<AttributeClass> attributes;
-    final AttributeValue targetAttribute;
+    private final Node tree;
+    private final List<AttributeClass> attributes;
+    private final AttributeValue targetAttribute;
 
     public Model(Node tree, List<AttributeClass> attributes, AttributeValue targetAttribute) {
         this.tree = tree;

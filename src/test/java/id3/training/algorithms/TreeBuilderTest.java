@@ -17,7 +17,7 @@ import static id3.domain.attr.TestDataFactory.*;
  */
 public class TreeBuilderTest {
 
-    DecisionTreeBuilder instance = new DecisionTreeBuilder();
+    private final DecisionTreeBuilder instance = new DecisionTreeBuilder();
 
     @Test
     public void isItFriday() throws Exception {

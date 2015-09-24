@@ -12,9 +12,9 @@ import static org.junit.Assert.assertThat;
  */
 public class EntropyCalculatorTest {
 
-    EntropyCalculator instance = new EntropyCalculator();
+    private final EntropyCalculator instance = new EntropyCalculator();
 
-    final static double acceptableError = 0.001;
+    private final static double acceptableError = 0.001;
 
     @Test
     public void calc_given9PositiveAnd5Negative_shouldReturn0940() {

@@ -6,7 +6,7 @@ import id3.domain.Rule;
  * @author kristian
  *         Created 24.09.15.
  */
-public class PruningResult {
+class PruningResult {
     final Rule unprunedRule;
     Rule prunedRule;
 

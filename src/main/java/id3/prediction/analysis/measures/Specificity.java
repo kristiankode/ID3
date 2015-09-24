@@ -6,6 +6,9 @@ import id3.prediction.Prediction;
 
 /**
  * Measures specificity of a prediction.
+ * <p>
+ * Specificity (also called the true negative rate) measures the proportion of negatives that are correctly
+ * identified as such (e.g., the percentage of healthy people who are correctly identified as not having the condition)
  *
  * @author kristian
  *         Created 24.09.15.

@@ -6,6 +6,10 @@ import id3.prediction.Prediction;
 
 /**
  * Measures sensitivity of a prediction.
+ * <p>
+ * Sensitivity (also called the true positive rate, or the recall in some fields) measures the
+ * proportion of positives that are correctly identified as such (e.g., the percentage of
+ * sick people who are correctly identified as having the condition).
  *
  * @author kristian
  *         Created 24.09.15.

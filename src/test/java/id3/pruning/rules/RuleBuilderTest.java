@@ -36,7 +36,7 @@ public class RuleBuilderTest {
 
     @Test
     public void numberOfLeafs_givenMushroomModel_expect33() throws FileNotFoundException, UnsupportedEncodingException {
-        int leafs = instance.getNumberOfLeafs(model.getTree(), 0);
+        int leafs = instance.getNumberOfLeafs(model.getTree());
         System.out.println("Found " + leafs + " leafs");
     }
 

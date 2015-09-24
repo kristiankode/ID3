@@ -47,6 +47,10 @@ public class PredictUsingRules implements Predictor {
             }
         }
 
+        if (prediction == null) {
+            log.error("Unable to predict sample {}, matched no rule", sample);
+        }
+
         return prediction;
     }
 

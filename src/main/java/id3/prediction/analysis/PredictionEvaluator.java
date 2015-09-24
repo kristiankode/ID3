@@ -39,11 +39,7 @@ public class PredictionEvaluator {
 
         int total = correct + incorrect;
 
-        Double accuracy = valueOf(correct).divide(valueOf(total), 5, RoundingMode.HALF_UP).doubleValue() * 100;
-
-        log.info("Predicted {} of {} values correctly, accuracy = {}%", correct, total, accuracy);
-
-        return accuracy;
+        return valueOf(correct).divide(valueOf(total), 5, RoundingMode.HALF_UP).doubleValue() * 100;
 
     }
 }

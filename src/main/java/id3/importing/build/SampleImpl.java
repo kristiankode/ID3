@@ -68,4 +68,20 @@ public class SampleImpl implements Sample {
         desc += "]";
         return desc;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof SampleImpl)) return false;
+
+        SampleImpl sample = (SampleImpl) o;
+
+        return !(getAttributes() != null ? !getAttributes().equals(sample.getAttributes()) : sample.getAttributes() != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return getAttributes() != null ? getAttributes().hashCode() : 0;
+    }
 }

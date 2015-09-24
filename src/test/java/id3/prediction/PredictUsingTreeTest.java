@@ -7,6 +7,7 @@ import id3.domain.attr.AttributeValue;
 import id3.domain.tree.NodeClass;
 import id3.importing.build.SampleImpl;
 import id3.prediction.analysis.PredictionEvaluator;
+import id3.pruning.RulePruner;
 import id3.testdata.MushroomTestData;
 import id3.training.algorithms.DecisionTreeBuilder;
 import org.junit.Test;
@@ -60,6 +61,9 @@ public class PredictUsingTreeTest {
                 actual = PredictionEvaluator.evaluatePredictionAccuracy(predictions, model.getTargetAttribute());
 
         assertThat(actual, closeTo(expectedAccuracy, acceptableError));
+
+        RulePruner rulePruner = new RulePruner();
+        rulePruner.pruneRepeatedly(model, predictThis);
     }
 
     @Test
@@ -76,6 +80,7 @@ public class PredictUsingTreeTest {
                 actual = PredictionEvaluator.evaluatePredictionAccuracy(predictions, model.getTargetAttribute());
 
         assertThat(actual, closeTo(expectedAccuracy, acceptableError));
+
     }
 
 

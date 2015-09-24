@@ -24,7 +24,7 @@ public class RuleBuilder {
 
         List<Rule> rules = getRules(model.getTree(), model.getTargetAttribute());
 
-        log.debug("Created following rules:");
+        log.debug("--------- Created following rules: ----------");
         for (Rule r : rules) {
             log.debug(r.toString());
         }
@@ -34,11 +34,12 @@ public class RuleBuilder {
 
     /**
      * Creates a new rule based on an existing rule. Used for pruning.
+     *
      * @param rule
      * @param attributesToRemove Attributes that should not be included in the new rule.
      * @return
      */
-    public Rule build(Rule rule, AttributeValue... attributesToRemove){
+    public Rule build(Rule rule, AttributeValue... attributesToRemove) {
         RuleImpl newRule = new RuleImpl(rule.getTargetValue());
         newRule.getPreconditions().addAll(rule.getPreconditions());
         newRule.getPreconditions().removeAll(Arrays.asList(attributesToRemove));
@@ -48,7 +49,7 @@ public class RuleBuilder {
         return newRule;
     }
 
-    List<Rule> getRules(Node node, AttributeValue target) {
+    private List<Rule> getRules(Node node, AttributeValue target) {
         List<Rule> rules = new ArrayList<Rule>();
 
         for (Node leaf : getLeafNodes(node, new ArrayList<Node>())) {
@@ -58,7 +59,7 @@ public class RuleBuilder {
         return rules;
     }
 
-    Rule buildRule(Node leaf, AttributeValue target) {
+    private Rule buildRule(Node leaf, AttributeValue target) {
         RuleImpl rule = new RuleImpl(target);
 
         rule.addPrecondition(leaf.getAttributeValue());
@@ -85,13 +86,13 @@ public class RuleBuilder {
         return leafs;
     }
 
-    int getNumberOfLeafs(Node tree, int counter) {
-
+    int getNumberOfLeafs(Node tree) {
+        int counter = 0;
         if (tree.isLeaf()) {
             counter++;
         } else {
             for (Node child : tree.getChildren()) {
-                counter += getNumberOfLeafs(child, 0);
+                counter += getNumberOfLeafs(child);
             }
         }
 

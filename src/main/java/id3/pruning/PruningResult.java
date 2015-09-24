@@ -1,0 +1,29 @@
+package id3.pruning;
+
+import id3.domain.Rule;
+
+/**
+ * @author kristian
+ *         Created 24.09.15.
+ */
+public class PruningResult {
+    final Rule unprunedRule;
+    Rule prunedRule;
+
+    public PruningResult(Rule unprunedRule, Rule prunedRule) {
+        this.unprunedRule = unprunedRule;
+        this.prunedRule = prunedRule;
+    }
+
+    public void setPrunedRule(Rule prunedRule) {
+        this.prunedRule = prunedRule;
+    }
+
+    public Rule getUnprunedRule() {
+        return unprunedRule;
+    }
+
+    public Rule getPrunedRule() {
+        return prunedRule;
+    }
+}

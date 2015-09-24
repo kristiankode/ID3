@@ -14,7 +14,6 @@ public class Prediction {
     private final NodeClass predictedValue;
     private final Rule reason;
 
-
     public Prediction(Sample sample, NodeClass predictedValue) {
         this.sample = sample;
         this.predictedValue = predictedValue;

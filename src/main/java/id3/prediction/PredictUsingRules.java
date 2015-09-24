@@ -4,7 +4,7 @@ import id3.domain.Model;
 import id3.domain.Rule;
 import id3.domain.Sample;
 import id3.domain.attr.AttributeValue;
-import id3.prediction.analysis.PredictionEvaluator;
+import id3.prediction.analysis.measures.Accuracy;
 import id3.pruning.rules.RuleBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,12 +20,13 @@ public class PredictUsingRules implements Predictor {
     private final Logger log = LoggerFactory.getLogger(PredictUsingRules.class);
 
     private final RuleBuilder ruleBuilder = new RuleBuilder();
+    private final Accuracy accuracy = new Accuracy();
 
     public List<Prediction> predict(Model model, List<Sample> unseenSamples) {
         List<Rule> rules = ruleBuilder.build(model);
         List<Prediction> predictions = predict(rules, unseenSamples);
 
-        PredictionEvaluator.evaluatePredictionAccuracy(predictions, model.getTargetAttribute());
+        accuracy.evaluate(predictions, model.getTargetAttribute());
 
         return predictions;
     }

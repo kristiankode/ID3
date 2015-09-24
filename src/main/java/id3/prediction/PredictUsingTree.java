@@ -5,7 +5,7 @@ import id3.domain.Model;
 import id3.domain.Sample;
 import id3.domain.tree.Node;
 import id3.domain.tree.NodeClass;
-import id3.prediction.analysis.PredictionEvaluator;
+import id3.prediction.analysis.measures.Accuracy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +18,7 @@ import java.util.List;
  */
 public class PredictUsingTree implements Predictor {
     private final Logger log = LoggerFactory.getLogger(PredictUsingTree.class);
+    private final Accuracy accuracy = new Accuracy();
 
     public List<Prediction> predict(Model model, List<Sample> unseenSamples) {
 
@@ -28,7 +29,7 @@ public class PredictUsingTree implements Predictor {
             predictions.add(result);
         }
 
-        PredictionEvaluator.evaluatePredictionAccuracy(predictions, model.getTargetAttribute());
+        accuracy.evaluate(predictions, model.getTargetAttribute());
 
         return predictions;
     }

@@ -6,7 +6,7 @@ import id3.domain.attr.AttributeClass;
 import id3.domain.attr.AttributeValue;
 import id3.domain.tree.NodeClass;
 import id3.importing.build.SampleImpl;
-import id3.prediction.analysis.PredictionEvaluator;
+import id3.prediction.analysis.measures.Accuracy;
 import id3.testdata.MushroomTestData;
 import id3.training.algorithms.DecisionTreeBuilder;
 import org.junit.Test;
@@ -34,6 +34,7 @@ public class PredictUsingRulesTest {
     private static final double acceptableError = 0.001;
     private final DecisionTreeBuilder treeBuilder = new DecisionTreeBuilder();
     private final Predictor instance = new PredictUsingRules();
+    private final Accuracy accuracy = new Accuracy();
 
     @Test
     public void predictFriday_givenSunny_shouldReturnPositive() {
@@ -61,7 +62,7 @@ public class PredictUsingRulesTest {
         List<Prediction> predictions = instance.predict(model, predictThis);
 
         Double expectedAccuracy = 100.0,
-                actual = PredictionEvaluator.evaluatePredictionAccuracy(predictions, model.getTargetAttribute());
+                actual = accuracy.evaluate(predictions, model.getTargetAttribute());
 
         assertThat(actual, closeTo(expectedAccuracy, acceptableError));
     }
@@ -77,7 +78,7 @@ public class PredictUsingRulesTest {
         List<Prediction> predictions = instance.predict(model, predictThis);
 
         Double expectedAccuracy = 93.333,
-                actual = PredictionEvaluator.evaluatePredictionAccuracy(predictions, model.getTargetAttribute());
+                actual = accuracy.evaluate(predictions, model.getTargetAttribute());
 
         log.debug("Predictions:");
         for (Prediction p : predictions) {

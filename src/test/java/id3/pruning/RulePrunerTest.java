@@ -5,6 +5,7 @@ import id3.domain.Rule;
 import id3.domain.Sample;
 import id3.prediction.PredictUsingRules;
 import id3.prediction.Prediction;
+import id3.prediction.analysis.measures.Accuracy;
 import id3.testdata.MushroomTestData;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -15,7 +16,6 @@ import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
-import static id3.prediction.analysis.PredictionEvaluator.evaluatePredictionAccuracy;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -29,6 +29,7 @@ public class RulePrunerTest {
     private final RulePruner pruner = new RulePruner();
     private final PredictUsingRules predictor = new PredictUsingRules();
     private final MushroomTestData data = new MushroomTestData();
+    private final Accuracy accuracy = new Accuracy();
 
     @Test
     public void prune_givenValidationDataSameAsTrainingData_expect100Percent()
@@ -38,12 +39,12 @@ public class RulePrunerTest {
         List<Sample> trainingSet = data.getAllMushroomSamples();
         List<Prediction> originalPrediction = predictor.predict(model, trainingSet);
         Double originalAccuracy =
-                evaluatePredictionAccuracy(originalPrediction, model.getTargetAttribute());
+                accuracy.evaluate(originalPrediction, model.getTargetAttribute());
 
         List<Rule> prunedRules = pruner.pruneRepeatedly(model, trainingSet);
         List<Prediction> prunedPrediction = predictor.predict(prunedRules, trainingSet);
         Double prunedAccuracy =
-                evaluatePredictionAccuracy(prunedPrediction, model.getTargetAttribute());
+                accuracy.evaluate(prunedPrediction, model.getTargetAttribute());
 
         log.debug("Accuracy before pruning = {}, Accuracy after pruning = {}", originalAccuracy, prunedAccuracy);
 
@@ -60,11 +61,11 @@ public class RulePrunerTest {
         List<Sample> validationSet = data.getValidationSet();
 
         List<Prediction> originalPrediction = predictor.predict(model, validationSet);
-        Double originalAccuracy = evaluatePredictionAccuracy(originalPrediction, model.getTargetAttribute());
+        Double originalAccuracy = accuracy.evaluate(originalPrediction, model.getTargetAttribute());
 
         List<Rule> prunedRules = pruner.pruneRepeatedly(model, validationSet);
         List<Prediction> prunedPrediction = predictor.predict(prunedRules, validationSet);
-        Double prunedAccuracy = evaluatePredictionAccuracy(prunedPrediction, model.getTargetAttribute());
+        Double prunedAccuracy = accuracy.evaluate(prunedPrediction, model.getTargetAttribute());
 
         log.debug("Accuracy before pruning = {}%, Accuracy after pruning = {}%", originalAccuracy, prunedAccuracy);
 

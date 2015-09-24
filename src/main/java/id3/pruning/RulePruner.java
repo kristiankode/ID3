@@ -6,7 +6,7 @@ import id3.domain.Sample;
 import id3.domain.attr.AttributeValue;
 import id3.prediction.PredictUsingRules;
 import id3.prediction.Prediction;
-import id3.prediction.analysis.PredictionEvaluator;
+import id3.prediction.analysis.measures.Accuracy;
 import id3.pruning.rules.RuleBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +25,7 @@ public class RulePruner {
 
     private final PredictUsingRules predictor = new PredictUsingRules();
     private final RuleBuilder ruleBuilder = new RuleBuilder();
+    private final Accuracy accuracy = new Accuracy();
 
     public List<Rule> pruneRepeatedly(Model model, List<Sample> pruningSet) {
         List<Rule> allRules = ruleBuilder.build(model);
@@ -56,8 +57,8 @@ public class RulePruner {
         return newResults;
     }
 
-    private void updateResults(List<PruningResult> tempResults, List<PruningResult> resultsToUpdate){
-        for(PruningResult pr : tempResults){
+    private void updateResults(List<PruningResult> tempResults, List<PruningResult> resultsToUpdate) {
+        for (PruningResult pr : tempResults) {
             PruningResult existing = findResultByRule(resultsToUpdate, pr.unprunedRule);
             assert existing != null;
             existing.setPrunedRule(pr.prunedRule);
@@ -95,7 +96,7 @@ public class RulePruner {
 
         List<Prediction> originalPrediction = predictor.predict(allRules, validationSet);
         double originalPerformance =
-                PredictionEvaluator.evaluatePredictionAccuracy(originalPrediction, target);
+                accuracy.evaluate(originalPrediction, target);
 
         Map<Rule, Double> performanceMap = new HashMap<Rule, Double>();
 
@@ -110,7 +111,7 @@ public class RulePruner {
 
             // check new performance
             List<Prediction> newPrediction = predictor.predict(allRules, validationSet);
-            double newPerformance = PredictionEvaluator.evaluatePredictionAccuracy(newPrediction, target);
+            double newPerformance = accuracy.evaluate(newPrediction, target);
 
             double performanceIncrease = newPerformance - originalPerformance;
 

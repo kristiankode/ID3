@@ -33,5 +33,4 @@ public class ImportFromCsv {
         SampleBuilder builder = new SampleBuilder();
         return builder.buildSamples(reader, attributes);
     }
-
 }

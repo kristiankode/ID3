@@ -27,9 +27,8 @@ public class DataSplitter {
     }
 
     private void split() {
-        List<Sample>
-                validationSet = new ArrayList<Sample>(allSamples),
-                trainingSet = new ArrayList<Sample>(allSamples);
+        validationSet = new ArrayList<Sample>(allSamples);
+        trainingSet = new ArrayList<Sample>(allSamples);
 
         RandomFilter filter = new RandomFilter();
         validationSet = filter.randomlySelectSamples(validationPercentage, validationSet);

@@ -40,7 +40,7 @@ public class DecisionTreeBuilder {
         Node rootNode = new Node();
         Node decisionTree = id3Recursion(allSamples, targetAttribute, attributes, rootNode);
 
-        System.out.println("------ Final decision tree: ----------");
+        System.out.println("------ Trained decision tree: ----------");
         decisionTree.print();
 
         return new Model(rootNode, attributes, targetAttribute);

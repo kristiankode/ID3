@@ -38,10 +38,7 @@ public class RulePruner {
             updateResults(tempResults, results);
         }
 
-        List<Rule> prunedRules = extractRules(results);
-        log.info("------ Tree after pruning ------");
-        printRules(prunedRules);
-        return prunedRules;
+        return extractRules(results);
     }
 
     private List<PruningResult> prune(List<PruningResult> prevResult, List<Sample> pruningSet) {

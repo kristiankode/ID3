@@ -1,10 +1,8 @@
 package id3.training.algorithms.selectors.attribute;
 
-import id3.training.algorithms.gain.GainCalculator;
-import id3.training.algorithms.gain.InformationGainCalc;
 import id3.domain.Sample;
 import id3.domain.attr.AttributeClass;
-import id3.domain.attr.AttributeValue;
+import id3.training.algorithms.gain.GainCalculator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,14 +14,12 @@ import java.util.List;
  * @author kristian
  *         Created 15.09.15.
  */
-public class InformationGainSelector {
-    private final static Logger log = LoggerFactory.getLogger(InformationGainSelector.class);
-    private final GainCalculator informationGainCalc;
-    private final AttributeValue targetAttribute;
+public class AttributeSelector {
+    private final static Logger log = LoggerFactory.getLogger(AttributeSelector.class);
+    private final GainCalculator gainCalculator;
 
-    public InformationGainSelector(AttributeValue targetAttribute) {
-        this.targetAttribute = targetAttribute;
-        informationGainCalc = new InformationGainCalc(targetAttribute);
+    public AttributeSelector(GainCalculator gainCalculator) {
+        this.gainCalculator = gainCalculator;
     }
 
     public AttributeClass selectAttribute(List<Sample> samples, List<AttributeClass> attributeClasses) {
@@ -32,7 +28,7 @@ public class InformationGainSelector {
         AttributeClass bestAttribute = null;
 
         for (AttributeClass attributeClass : attributeClasses) {
-            Double predictedInfoGain = informationGainCalc.getGainFor(samples, attributeClass);
+            Double predictedInfoGain = gainCalculator.getGainFor(samples, attributeClass);
 
             if (predictedInfoGain >= highestInfoGain) {
                 bestAttribute = attributeClass;

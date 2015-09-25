@@ -4,7 +4,7 @@ import id3.domain.attr.TestDataFactory;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.closeTo;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 /**
  * @author kristian
@@ -16,11 +16,13 @@ public class ListEntropyTest {
     private static final double acceptableError = 0.001;
 
     @Test
-    public void entropy_givenTennisData_shouldBe0940(){
+    public void entropyWithoutTarget_givenTennisData_shouldBe0940() {
         Double expected = 0.940,
-                actual = instance.calculateEntropy(TestDataFactory.getTennisSamples(), TestDataFactory.niceDayForTennis());
+                actual = instance.calculateEntropy(TestDataFactory.getTennisSamples(),
+                        TestDataFactory.niceDayForTennis().getAttributeClass());
 
         assertThat(actual, closeTo(expected, acceptableError));
     }
+
 
 }

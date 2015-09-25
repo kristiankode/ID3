@@ -1,12 +1,14 @@
 package id3.training.algorithms;
 
-import id3.training.algorithms.selectors.attribute.InformationGainSelector;
 import id3.domain.Model;
 import id3.domain.Sample;
 import id3.domain.attr.AttributeClass;
 import id3.domain.attr.AttributeValue;
 import id3.domain.tree.Node;
 import id3.domain.tree.NodeClass;
+import id3.training.algorithms.gain.GainCalculator;
+import id3.training.algorithms.gain.GainRatio;
+import id3.training.algorithms.selectors.attribute.AttributeSelector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,13 +27,14 @@ import static id3.training.filter.SampleFilter.filterByAttributeValue;
 public class DecisionTreeBuilder {
     private final static Logger log = LoggerFactory.getLogger(DecisionTreeBuilder.class);
 
-    private InformationGainSelector attributeSelector;
+    private AttributeSelector attributeSelector;
 
     public Model build(List<Sample> allSamples, AttributeValue targetAttribute, List<AttributeClass> attributes) {
         System.out.println("Building decision tree for answering: Is it " + targetAttribute.getValue() + "?");
         System.out.println("----------------------------------------------------------------");
 
-        attributeSelector = new InformationGainSelector(targetAttribute);
+        GainCalculator gainCalculator = new GainRatio(targetAttribute);
+        attributeSelector = new AttributeSelector(gainCalculator);
         sanitizeAttributes(attributes, targetAttribute);
 
         Node rootNode = new Node();

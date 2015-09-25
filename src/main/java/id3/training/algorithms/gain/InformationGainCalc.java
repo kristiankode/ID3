@@ -1,9 +1,9 @@
 package id3.training.algorithms.gain;
 
-import id3.training.algorithms.entropy.ListEntropy;
 import id3.domain.Sample;
 import id3.domain.attr.AttributeClass;
 import id3.domain.attr.AttributeValue;
+import id3.training.algorithms.entropy.ListEntropy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,7 +32,7 @@ public class InformationGainCalc implements GainCalculator {
     }
 
     public double getGainFor(List<Sample> samples, AttributeClass attributeClass) {
-        Double initialEntropy = entropyCalc.calculateEntropy(samples, targetAttribute);
+        Double initialEntropy = entropyCalc.calculateEntropy(samples, targetAttribute.getAttributeClass());
         Double expectedEntropy = getExpectedEntropy(samples, attributeClass);
 
         return initialEntropy - expectedEntropy;

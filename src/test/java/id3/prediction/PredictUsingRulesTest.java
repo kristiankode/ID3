@@ -105,6 +105,7 @@ public class PredictUsingRulesTest {
     public void predictPoisonous_givenHabitatU_shouldReturnNegative()
             throws FileNotFoundException, UnsupportedEncodingException {
         MushroomTestData data = new MushroomTestData();
+        data.loadData(0.1);
 
         NodeClass expected = NodeClass.NEGATIVE,
                 actual = instance.predictSample(data.getMushroomModel(), data.sampleWithHabitatU()).getPredictedValue();

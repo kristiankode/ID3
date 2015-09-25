@@ -1,8 +1,10 @@
 package id3.core.analysis;
 
 import id3.api.domain.Sample;
+import id3.api.domain.attr.AttributeClass;
 import id3.api.domain.attr.AttributeValue;
 import id3.api.domain.tree.NodeClass;
+import id3.core.training.filter.SampleFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,6 +40,24 @@ public class ValueAnalyzer {
         } else {
             return NEGATIVE;
         }
+    }
+
+    public static AttributeValue mostCommonValueOfAttribute(List<Sample> samples, AttributeClass attribute) {
+
+        int mostCommonCount = 0;
+        AttributeValue mostCommonValue = null;
+
+        for (AttributeValue val : attribute.getPossibleValues()) {
+            if (val.getValue().equals("?")) { // skip missing values
+                continue;
+            }
+            int size = SampleFilter.filterByAttributeValue(samples, val).size();
+            if (size >= mostCommonCount) {
+                mostCommonValue = val;
+                mostCommonCount = size;
+            }
+        }
+        return mostCommonValue;
     }
 
     public static boolean sampleMatchesTarget(Sample sample, AttributeValue target) {

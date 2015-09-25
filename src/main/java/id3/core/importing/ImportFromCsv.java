@@ -31,6 +31,9 @@ public class ImportFromCsv {
     public List<Sample> retrieveSamples(List<AttributeClass> attributes) {
 
         SampleBuilder builder = new SampleBuilder();
+
+        builder.doPreprocessing(reader);
+
         return builder.buildSamples(reader, attributes);
     }
 }

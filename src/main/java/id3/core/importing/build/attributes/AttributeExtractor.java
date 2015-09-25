@@ -18,6 +18,7 @@ public class AttributeExtractor {
     final static Logger log = LoggerFactory.getLogger(SampleBuilder.class);
 
     private List<AttributeClass> attributes = new ArrayList<AttributeClass>();
+    private final AttributeValueBuilder attributeValueBuilder = new AttributeValueBuilder();
 
     public List<AttributeClass> getAllAttributes(DataReader reader) {
 
@@ -30,7 +31,7 @@ public class AttributeExtractor {
 
             for (int columnIndex = 0; columnIndex < attributes.size(); columnIndex++) {
                 AttributeClass columnHeader = attributes.get(columnIndex);
-                AttributeValue columnValue = new AttrValueImpl(columnHeader, row[columnIndex]);
+                AttributeValue columnValue = attributeValueBuilder.build(columnHeader, row[columnIndex]);
 
                 updatePossibleValuesIfNecessary(columnValue, columnIndex);
             }

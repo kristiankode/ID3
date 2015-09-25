@@ -1,9 +1,10 @@
 package id3.core.importing.build;
 
 import id3.api.domain.Sample;
-import id3.core.importing.build.attributes.AttrValueImpl;
 import id3.api.domain.attr.AttributeClass;
 import id3.api.domain.attr.AttributeValue;
+import id3.core.importing.build.attributes.AttributeValueBuilder;
+import id3.core.importing.build.attributes.missing.ReplaceMissingWithCommon;
 import id3.core.importing.read.DataReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,12 @@ import java.util.List;
 public class SampleBuilder {
     final static Logger log = LoggerFactory.getLogger(SampleBuilder.class);
 
+    private AttributeValueBuilder valueBuilder = new AttributeValueBuilder();
+
+    public void doPreprocessing(DataReader reader){
+        ReplaceMissingWithCommon missingAttributesFixer = new ReplaceMissingWithCommon(reader);
+        valueBuilder.setMissingAttributeFixer(missingAttributesFixer);
+    }
 
     public List<Sample> buildSamples(DataReader reader, List<AttributeClass> attributes) {
         List<Sample> samples = new ArrayList<Sample>();
@@ -39,10 +46,11 @@ public class SampleBuilder {
         for (int columnIndex = 0; columnIndex < attrClasses.size(); columnIndex++) {
             AttributeClass existingClass = attrClasses.get(columnIndex);
 
-            AttributeValue val = new AttrValueImpl(existingClass, row[columnIndex]);
+            AttributeValue val = valueBuilder.build(existingClass, row[columnIndex]);
             sampleValues[columnIndex] = val;
         }
 
         return new SampleImpl(sampleValues);
     }
+
 }

@@ -17,7 +17,7 @@ public class SampleImpl implements Sample {
     private List<AttributeValue> attributes = new ArrayList<AttributeValue>();
 
     public SampleImpl(AttributeValue... attributes) {
-        this.attributes = Arrays.asList(attributes);
+        this.attributes = new ArrayList<AttributeValue>(Arrays.asList(attributes));
     }
 
     public boolean hasAttribute(AttributeClass attributeClass) {

@@ -18,9 +18,11 @@ public class AttrClassImpl implements AttributeClass {
     public AttrClassImpl(String label, String... possibleValues) {
         this.label = label;
 
+        AttributeValueBuilder attributeValueBuilder = new AttributeValueBuilder();
+
         List<AttributeValue> tmpVals = new ArrayList<AttributeValue>();
-        for(String value : possibleValues) {
-            AttributeValue val = new AttrValueImpl(this, value);
+        for (String value : possibleValues) {
+            AttributeValue val = attributeValueBuilder.build(this, value);
             tmpVals.add(val);
         }
         this.possibleValues = tmpVals;

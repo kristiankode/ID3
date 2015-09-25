@@ -22,11 +22,6 @@ public class CommandLine {
 
     public static void main(String[] args) throws FileNotFoundException {
 
-        print("Started program with arguments:");
-        for (String s : args) {
-            print(" - " + s);
-        }
-
         String filePath = args[FILE_PATH_INDEX];
         Integer targetColumnIndex = Integer.parseInt(args[TARGET_COL_INDEX]);
         Double validationPercentage = Double.parseDouble(args[VALIDATION_PERCENTAGE_INDEX]);

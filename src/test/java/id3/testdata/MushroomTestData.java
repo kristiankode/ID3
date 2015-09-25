@@ -1,12 +1,12 @@
 package id3.testdata;
 
-import id3.domain.Model;
-import id3.domain.Sample;
-import id3.domain.attr.AttributeClass;
-import id3.importing.ImportFromCsv;
-import id3.importing.build.SampleBuilder;
-import id3.importing.filter.RandomFilter;
-import id3.training.algorithms.DecisionTreeBuilder;
+import id3.api.domain.Model;
+import id3.api.domain.Sample;
+import id3.api.domain.attr.AttributeClass;
+import id3.core.importing.ImportFromCsv;
+import id3.core.importing.build.SampleBuilder;
+import id3.core.importing.filter.RandomFilter;
+import id3.core.training.algorithms.DecisionTreeBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

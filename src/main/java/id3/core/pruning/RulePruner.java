@@ -7,6 +7,7 @@ import id3.api.domain.attr.AttributeValue;
 import id3.core.prediction.PredictUsingRules;
 import id3.core.prediction.Prediction;
 import id3.core.prediction.analysis.measures.Accuracy;
+import id3.core.prediction.analysis.measures.PerformanceEvaluator;
 import id3.core.pruning.rules.RuleBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +26,7 @@ public class RulePruner {
 
     private final PredictUsingRules predictor = new PredictUsingRules();
     private final RuleBuilder ruleBuilder = new RuleBuilder();
-    private final Accuracy accuracy = new Accuracy();
+    private PerformanceEvaluator accuracy = new Accuracy();
 
     public List<Rule> pruneRepeatedly(Model model, List<Sample> pruningSet) {
         List<Rule> allRules = ruleBuilder.build(model);
@@ -151,5 +152,7 @@ public class RulePruner {
         return rules;
     }
 
-
+    public void setAccuracy(PerformanceEvaluator accuracy) {
+        this.accuracy = accuracy;
+    }
 }

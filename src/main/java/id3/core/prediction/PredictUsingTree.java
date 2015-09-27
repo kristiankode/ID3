@@ -1,10 +1,10 @@
 package id3.core.prediction;
 
-import id3.core.analysis.ValueAnalyzer;
 import id3.api.domain.Model;
 import id3.api.domain.Sample;
 import id3.api.domain.tree.Node;
 import id3.api.domain.tree.NodeClass;
+import id3.core.analysis.ValueAnalyzer;
 import id3.core.prediction.analysis.measures.Accuracy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,9 +49,6 @@ public class PredictUsingTree implements Predictor {
         } else {
             for (Node child : model.getChildren()) {
                 if (ValueAnalyzer.sampleMatchesTarget(sample, child.getAttributeValue())) {
-                    log.debug("Sample matches node {} (leaf={}), expanding subtree",
-                            child.description(), child.isLeaf());
-
                     classification = predictRecursively(child, sample);
                     break;
                 }

@@ -14,7 +14,7 @@ import static java.math.BigDecimal.valueOf;
  */
 public abstract class PerformanceEvaluator {
 
-    public static final int precision = 6;
+    public static final int precision = 10;
 
     public Double evaluate(List<Prediction> predictions, AttributeValue target) {
         int correct = 0, wrong = 0;

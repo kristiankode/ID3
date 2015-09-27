@@ -2,6 +2,8 @@ package id3.core.analysis;
 
 import id3.api.domain.Sample;
 import id3.core.importing.filter.RandomFilter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +15,7 @@ import java.util.List;
  *         Created 24.09.15.
  */
 public class DataSplitter {
+    Logger log = LoggerFactory.getLogger(DataSplitter.class);
 
     private final List<Sample> allSamples;
     private final Double validationPercentage;
@@ -33,6 +36,11 @@ public class DataSplitter {
         RandomFilter filter = new RandomFilter();
         validationSet = filter.randomlySelectSamples(validationPercentage, validationSet);
         trainingSet.removeAll(validationSet);
+
+
+        log.debug("Divided {} samples. Training set: {}, validation set {}",
+                allSamples.size(), trainingSet.size(), validationSet.size());
+
     }
 
     public List<Sample> getTrainingSet() {

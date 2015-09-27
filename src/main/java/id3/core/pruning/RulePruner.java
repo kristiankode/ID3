@@ -32,11 +32,17 @@ public class RulePruner {
         List<PruningResult> results = initResults(allRules),
                 tempResults = new ArrayList<PruningResult>(results);
 
+        log.debug("Starting pruning, initial performance = {}",
+                accuracy.evaluate(predictor.predict(allRules, pruningSet), model.getTargetAttribute()));
+
         while (!tempResults.isEmpty()) {
             tempResults = prune(results, pruningSet);
 
             updateResults(tempResults, results);
         }
+
+        log.debug("Accuracy after pruning = {}",
+                accuracy.evaluate(predictor.predict(extractRules(results), pruningSet), model.getTargetAttribute()));
 
         return extractRules(results);
     }
@@ -97,7 +103,7 @@ public class RulePruner {
 
         Map<Rule, Double> performanceMap = new HashMap<Rule, Double>();
 
-        final double performanceThreshold = 0.0;
+        final double performanceThreshold = 0.00000;
 
         for (AttributeValue val : ruleToPrune.getPreconditions()) {
             Rule prunedRule = ruleBuilder.build(ruleToPrune, val);
@@ -113,7 +119,7 @@ public class RulePruner {
             double performanceIncrease = newPerformance - originalPerformance;
 
             // check that the pruning did not make the model perform worse
-            if (performanceIncrease >= performanceThreshold) {
+            if (!(performanceIncrease < performanceThreshold)) {
 
                 // save pruning
                 performanceMap.put(prunedRule, performanceIncrease);

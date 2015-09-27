@@ -8,6 +8,7 @@ import id3.api.domain.attr.AttributeValue;
 import id3.core.analysis.DataSplitter;
 import id3.core.importing.ImportFromCsv;
 import id3.core.prediction.PredictUsingRules;
+import id3.core.prediction.PredictUsingTree;
 import id3.core.prediction.Prediction;
 import id3.core.prediction.analysis.measures.Accuracy;
 import id3.core.prediction.analysis.measures.PerformanceEvaluator;
@@ -30,7 +31,8 @@ public class Runner {
     private DataSplitter data;
     private AttributeValue target;
     private Model model;
-    private PredictUsingRules predictor = new PredictUsingRules();
+    private PredictUsingTree predictorWithoutPruning = new PredictUsingTree();
+    private PredictUsingRules predictorWithPruning = new PredictUsingRules();
     private List<Rule> rules;
 
     private final PerformanceEvaluator
@@ -57,31 +59,55 @@ public class Runner {
 
         target = attributes.get(targetColumn).getPossibleValues().get(0);
 
-        log.info("Loaded {} training samples and {} attributes", data.getTrainingSet(), attributes.size());
+        log.info("Loaded {} training samples and {} attributes", data.getTrainingSet().size(), attributes.size());
         model = treeBuilder.build(data.getTrainingSet(), target, attributes);
 
         RulePruner pruner = new RulePruner();
 
         rules = pruner.pruneRepeatedly(model, data.getValidationSet());
 
-        predictions = predictor.predict(rules, data.getValidationSet());
+        predictions = predictorWithPruning.predict(rules, data.getValidationSet());
         return rules;
     }
 
-    public List<Prediction> getPredictions() {
-        return predictions;
+    public List<Prediction> getTrainingPredictionWithoutPruning() {
+        return predictorWithoutPruning.predict(getModel(), data.getTrainingSet());
     }
 
-    public Double getAccuracy() {
-        return accuracy.evaluate(getPredictions(), target);
+    public List<Prediction> getValidationPredictionWithoutPruning() {
+        return predictorWithoutPruning.predict(getModel(), data.getValidationSet());
     }
 
-    public Double getSensitivity() {
-        return sensitivity.evaluate(getPredictions(), target);
+    public List<Prediction> getTrainingPredictionWithPruning() {
+        return predictorWithPruning.predict(getRules(), data.getTrainingSet());
     }
 
-    public Double getSpecificity() {
-        return specificity.evaluate(getPredictions(), target);
+    public List<Prediction> getValidationPredictionWithPruning() {
+        return predictorWithPruning.predict(getRules(), data.getValidationSet());
+    }
+
+    public DataSplitter getData() {
+        return data;
+    }
+
+    public AttributeValue getTarget() {
+        return target;
+    }
+
+    public Model getModel() {
+        return model;
+    }
+
+    public Double getAccuracy(List<Prediction> predictions) {
+        return accuracy.evaluate(predictions, target);
+    }
+
+    public Double getSensitivity(List<Prediction> predictions) {
+        return sensitivity.evaluate(predictions, target);
+    }
+
+    public Double getSpecificity(List<Prediction> predictions) {
+        return specificity.evaluate(predictions, target);
     }
 
     public List<Rule> getRules() {

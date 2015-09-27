@@ -1,6 +1,7 @@
 package id3.api;
 
 import id3.api.domain.Rule;
+import id3.core.prediction.Prediction;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -31,22 +32,29 @@ public class CommandLine {
 
         if (filePathIsValid(filePath)) {
             runner = new Runner(filePath, targetColumnIndex, validationPercentage * 100);
+
+            // print accuracy of training-set before and after pruning
+            printAccuracy("Training set before pruning", runner.getTrainingPredictionWithoutPruning());
+            printAccuracy("Training set after pruning", runner.getTrainingPredictionWithPruning());
+
+            // print accuracy of validation set before and after pruning
+            printAccuracy("Validation set before pruning", runner.getValidationPredictionWithoutPruning());
+            printAccuracy("Validation set after pruning", runner.getValidationPredictionWithPruning());
+
             rules = runner.getRules();
 
             print("------- Created the following rules (after pruning) ----------");
             for (Rule r : rules) {
                 print(r.toString());
             }
-
-            printAccuracy();
         }
     }
 
-    private static void printAccuracy() {
-        print("----- Performance after pruning: -----");
-        print("Accuracy:    " + runner.getAccuracy());
-        print("Sensitivity: " + runner.getSensitivity());
-        print("Specificity: " + runner.getSpecificity());
+    private static void printAccuracy(String description, List<Prediction> predictions) {
+        print("----- Performance of " + description + ": -----");
+        print("Accuracy:    " + runner.getAccuracy(predictions));
+        print("Sensitivity: " + runner.getSensitivity(predictions));
+        print("Specificity: " + runner.getSpecificity(predictions));
     }
 
     private static String fixFilePath(String path) {
@@ -60,7 +68,7 @@ public class CommandLine {
             return true;
         } catch (FileNotFoundException e) {
             print("Could not find file at following path: " + filepath);
-            print("Path is relative to the applications working directory");
+            print("Path must be absolute");
             return false;
         }
     }

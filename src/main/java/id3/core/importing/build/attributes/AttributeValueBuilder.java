@@ -22,7 +22,6 @@ public class AttributeValueBuilder {
 
         if (missingAttributeFixer != null && isAttributeMissing(value)) {
             attributeValue = missingAttributeFixer.getReplacementFor(attributeClass);
-            log.debug("Attribute {} was missing, replaced with {}", attributeValue.getLabel(), attributeValue.getValue());
         } else {
             attributeValue = new AttrValueImpl(attributeClass, value);
         }

@@ -2,6 +2,8 @@ package id3.core.importing;
 
 import id3.api.domain.Sample;
 import id3.api.domain.attr.AttributeClass;
+import id3.api.domain.attr.AttributeValue;
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -34,5 +36,17 @@ public class ImportFromCsvTest {
         List<Sample> samples = instance.retrieveSamples(attributes);
 
         assertThat(samples.size(), is(8124)); // file is 8124 lines + header
+    }
+
+    @Test
+    public void buildSamples_withPreprocessing_shouldContainNoMissingValues() {
+        List<AttributeClass> attributes = instance.retrieveAttributes();
+        List<Sample> samples = instance.retrieveSamples(attributes);
+
+        for (Sample sample : samples) {
+            for (AttributeValue val : sample.getAttributes()) {
+                assertThat(val.getValue(), Matchers.not(is("?")));
+            }
+        }
     }
 }

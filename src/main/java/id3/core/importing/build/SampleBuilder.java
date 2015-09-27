@@ -21,7 +21,7 @@ public class SampleBuilder {
 
     private AttributeValueBuilder valueBuilder = new AttributeValueBuilder();
 
-    public void doPreprocessing(DataReader reader){
+    public void preProcess(DataReader reader){
         ReplaceMissingWithCommon missingAttributesFixer = new ReplaceMissingWithCommon(reader);
         valueBuilder.setMissingAttributeFixer(missingAttributesFixer);
     }

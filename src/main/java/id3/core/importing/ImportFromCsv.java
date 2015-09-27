@@ -32,7 +32,7 @@ public class ImportFromCsv {
 
         SampleBuilder builder = new SampleBuilder();
 
-        builder.doPreprocessing(reader);
+        builder.preProcess(reader);
 
         return builder.buildSamples(reader, attributes);
     }

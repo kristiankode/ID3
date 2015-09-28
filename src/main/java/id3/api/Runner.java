@@ -63,6 +63,7 @@ public class Runner {
         model = treeBuilder.build(data.getTrainingSet(), target, attributes);
 
         RulePruner pruner = new RulePruner();
+        pruner.setPerformanceEvaluator(accuracy);
 
         rules = pruner.pruneRepeatedly(model, data.getValidationSet());
 
@@ -84,10 +85,6 @@ public class Runner {
 
     public List<Prediction> getValidationPredictionWithPruning() {
         return predictorWithPruning.predict(getRules(), data.getValidationSet());
-    }
-
-    public DataSplitter getData() {
-        return data;
     }
 
     public AttributeValue getTarget() {

@@ -34,6 +34,9 @@ public abstract class PerformanceEvaluator {
     protected abstract boolean isWronglyClassified(Prediction prediction, AttributeValue target);
 
     private Double rate(int count, int total) {
+        if(total == 0){
+            return 0.0; // avoid division by zero
+        }
         return valueOf(count).divide(valueOf(total), precision, RoundingMode.HALF_UP)
                 .multiply(valueOf(100)).doubleValue();
     }

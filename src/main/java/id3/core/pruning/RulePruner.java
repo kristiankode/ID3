@@ -26,7 +26,7 @@ public class RulePruner {
 
     private final PredictUsingRules predictor = new PredictUsingRules();
     private final RuleBuilder ruleBuilder = new RuleBuilder();
-    private PerformanceEvaluator accuracy = new Accuracy();
+    private PerformanceEvaluator performanceEvaluator = new Accuracy();
 
     public List<Rule> pruneRepeatedly(Model model, List<Sample> pruningSet) {
         List<Rule> allRules = ruleBuilder.build(model);
@@ -34,7 +34,7 @@ public class RulePruner {
                 tempResults = new ArrayList<PruningResult>(results);
 
         log.debug("Starting pruning, initial performance = {}",
-                accuracy.evaluate(predictor.predict(allRules, pruningSet), model.getTargetAttribute()));
+                performanceEvaluator.evaluate(predictor.predict(allRules, pruningSet), model.getTargetAttribute()));
 
         while (!tempResults.isEmpty()) {
             tempResults = prune(results, pruningSet);
@@ -43,7 +43,7 @@ public class RulePruner {
         }
 
         log.debug("Accuracy after pruning = {}",
-                accuracy.evaluate(predictor.predict(extractRules(results), pruningSet), model.getTargetAttribute()));
+                performanceEvaluator.evaluate(predictor.predict(extractRules(results), pruningSet), model.getTargetAttribute()));
 
         return extractRules(results);
     }
@@ -100,7 +100,7 @@ public class RulePruner {
 
         List<Prediction> originalPrediction = predictor.predict(allRules, validationSet);
         double originalPerformance =
-                accuracy.evaluate(originalPrediction, target);
+                performanceEvaluator.evaluate(originalPrediction, target);
 
         Map<Rule, Double> performanceMap = new HashMap<Rule, Double>();
 
@@ -115,7 +115,7 @@ public class RulePruner {
 
             // check new performance
             List<Prediction> newPrediction = predictor.predict(allRules, validationSet);
-            double newPerformance = accuracy.evaluate(newPrediction, target);
+            double newPerformance = performanceEvaluator.evaluate(newPrediction, target);
 
             double performanceIncrease = newPerformance - originalPerformance;
 
@@ -152,7 +152,7 @@ public class RulePruner {
         return rules;
     }
 
-    public void setAccuracy(PerformanceEvaluator accuracy) {
-        this.accuracy = accuracy;
+    public void setPerformanceEvaluator(PerformanceEvaluator accuracy) {
+        this.performanceEvaluator = accuracy;
     }
 }

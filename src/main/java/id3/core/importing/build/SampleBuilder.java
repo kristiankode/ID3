@@ -17,8 +17,6 @@ import java.util.List;
  *         Created 16.09.15.
  */
 public class SampleBuilder {
-    final static Logger log = LoggerFactory.getLogger(SampleBuilder.class);
-
     private AttributeValueBuilder valueBuilder = new AttributeValueBuilder();
 
     public void preProcess(DataReader reader){
@@ -50,7 +48,7 @@ public class SampleBuilder {
             sampleValues[columnIndex] = val;
         }
 
-        return new SampleImpl(sampleValues);
+        return new Sample(sampleValues);
     }
 
 }

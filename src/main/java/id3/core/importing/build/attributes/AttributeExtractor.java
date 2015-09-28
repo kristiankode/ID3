@@ -2,10 +2,7 @@ package id3.core.importing.build.attributes;
 
 import id3.api.domain.attr.AttributeClass;
 import id3.api.domain.attr.AttributeValue;
-import id3.core.importing.build.SampleBuilder;
 import id3.core.importing.read.DataReader;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +12,6 @@ import java.util.List;
  *         Created 20.09.15.
  */
 public class AttributeExtractor {
-    final static Logger log = LoggerFactory.getLogger(SampleBuilder.class);
 
     private List<AttributeClass> attributes = new ArrayList<AttributeClass>();
     private final AttributeValueBuilder attributeValueBuilder = new AttributeValueBuilder();
@@ -52,7 +48,7 @@ public class AttributeExtractor {
         List<AttributeClass> attrClasses = new ArrayList<AttributeClass>();
 
         for (String s : attributeLabels) {
-            attrClasses.add(new AttrClassImpl(s));
+            attrClasses.add(new AttributeClass(s));
         }
         return attrClasses;
     }

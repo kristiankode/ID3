@@ -1,6 +1,5 @@
 package id3.api.domain.attr;
 
-import id3.core.importing.build.attributes.AttrClassImpl;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -17,7 +16,7 @@ public class AttrClassImplTest {
         String label = "Manufacturer";
         String[] values = {"Ducati", "Triumph", "Piaggio"};
 
-        AttributeClass attrClass = new AttrClassImpl(label, values);
+        AttributeClass attrClass = new AttributeClass(label, values);
 
         assertThat(attrClass.getLabel(), is(label));
         assertThat(attrClass.getPossibleValues().get(0).getValue(), is(values[0]));

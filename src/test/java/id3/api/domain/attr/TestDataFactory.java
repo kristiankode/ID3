@@ -1,8 +1,6 @@
 package id3.api.domain.attr;
 
 import id3.api.domain.Sample;
-import id3.core.importing.build.SampleImpl;
-import id3.core.importing.build.attributes.AttrClassImpl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,32 +14,31 @@ import java.util.Random;
 public class TestDataFactory {
 
     public final static AttributeClass
-            weather = new AttrClassImpl("Weather", "Rainy", "Sunny", "Cloudy");
-    private final static AttributeClass temperature = new AttrClassImpl("Temperature", "Hot", "Cool", "Mild");
-    private final static AttributeClass wind = new AttrClassImpl("Wind", "Weak", "Strong");
-    private final static AttributeClass humidity = new AttrClassImpl("Humidity", "High", "Normal");
-    private final static AttributeClass playTennis = new AttrClassImpl("Tennis potential", "a nice day for tennis", "a horrible day for tennis");
-    private final static AttributeClass weekday = new AttrClassImpl("Weekday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
+            weather = new AttributeClass("Weather", "Rainy", "Sunny", "Cloudy");
+    private final static AttributeClass temperature = new AttributeClass("Temperature", "Hot", "Cool", "Mild");
+    private final static AttributeClass wind = new AttributeClass("Wind", "Weak", "Strong");
+    private final static AttributeClass humidity = new AttributeClass("Humidity", "High", "Normal");
+    private final static AttributeClass playTennis = new AttributeClass("Tennis potential", "a nice day for tennis", "a horrible day for tennis");
+    private final static AttributeClass weekday = new AttributeClass("Weekday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
 
 
     public static List<Sample> getTennisSamples() {
 
         return Arrays.asList(
-                (Sample)
-                        new SampleImpl(sunny(), hot(), highHumidity(), weakWind(), noTennis()),
-                new SampleImpl(sunny(), hot(), highHumidity(), strongWind(), noTennis()),
-                new SampleImpl(cloudy(), hot(), highHumidity(), weakWind(), niceDayForTennis()),
-                new SampleImpl(rainy(), mild(), highHumidity(), weakWind(), niceDayForTennis()),
-                new SampleImpl(rainy(), cool(), normalHumidity(), weakWind(), niceDayForTennis()),
-                new SampleImpl(rainy(), cool(), normalHumidity(), strongWind(), noTennis()),
-                new SampleImpl(cloudy(), cool(), normalHumidity(), strongWind(), niceDayForTennis()),
-                new SampleImpl(sunny(), mild(), highHumidity(), weakWind(), noTennis()),
-                new SampleImpl(sunny(), cool(), normalHumidity(), weakWind(), niceDayForTennis()),
-                new SampleImpl(rainy(), mild(), normalHumidity(), weakWind(), niceDayForTennis()),
-                new SampleImpl(sunny(), mild(), normalHumidity(), strongWind(), niceDayForTennis()),
-                new SampleImpl(cloudy(), mild(), highHumidity(), strongWind(), niceDayForTennis()),
-                new SampleImpl(cloudy(), hot(), normalHumidity(), weakWind(), niceDayForTennis()),
-                new SampleImpl(rainy(), mild(), highHumidity(), strongWind(), noTennis())
+                        new Sample(sunny(), hot(), highHumidity(), weakWind(), noTennis()),
+                new Sample(sunny(), hot(), highHumidity(), strongWind(), noTennis()),
+                new Sample(cloudy(), hot(), highHumidity(), weakWind(), niceDayForTennis()),
+                new Sample(rainy(), mild(), highHumidity(), weakWind(), niceDayForTennis()),
+                new Sample(rainy(), cool(), normalHumidity(), weakWind(), niceDayForTennis()),
+                new Sample(rainy(), cool(), normalHumidity(), strongWind(), noTennis()),
+                new Sample(cloudy(), cool(), normalHumidity(), strongWind(), niceDayForTennis()),
+                new Sample(sunny(), mild(), highHumidity(), weakWind(), noTennis()),
+                new Sample(sunny(), cool(), normalHumidity(), weakWind(), niceDayForTennis()),
+                new Sample(rainy(), mild(), normalHumidity(), weakWind(), niceDayForTennis()),
+                new Sample(sunny(), mild(), normalHumidity(), strongWind(), niceDayForTennis()),
+                new Sample(cloudy(), mild(), highHumidity(), strongWind(), niceDayForTennis()),
+                new Sample(cloudy(), hot(), normalHumidity(), weakWind(), niceDayForTennis()),
+                new Sample(rainy(), mild(), highHumidity(), strongWind(), noTennis())
         );
 
     }
@@ -63,15 +60,15 @@ public class TestDataFactory {
     }
 
     private static Sample rainyMonday() {
-        return new SampleImpl(rainy(), monday(), randomTemp());
+        return new Sample(rainy(), monday(), randomTemp());
     }
 
     public static Sample cloudyMonday() {
-        return new SampleImpl(cloudy(), monday(), randomTemp());
+        return new Sample(cloudy(), monday(), randomTemp());
     }
 
     private static Sample sunnyFriday() {
-        return new SampleImpl(sunny(), friday(), randomTemp());
+        return new Sample(sunny(), friday(), randomTemp());
     }
 
     public static AttributeValue monday() {

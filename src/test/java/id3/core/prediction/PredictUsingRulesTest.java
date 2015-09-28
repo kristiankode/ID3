@@ -5,10 +5,9 @@ import id3.api.domain.Sample;
 import id3.api.domain.attr.AttributeClass;
 import id3.api.domain.attr.AttributeValue;
 import id3.api.domain.tree.NodeClass;
-import id3.core.importing.build.SampleImpl;
 import id3.core.prediction.analysis.measures.Accuracy;
-import id3.testdata.MushroomTestData;
 import id3.core.training.algorithms.DecisionTreeBuilder;
+import id3.testdata.MushroomTestData;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +44,7 @@ public class PredictUsingRulesTest {
 
         Model model = treeBuilder.build(samples, target, attributes);
 
-        Sample predictThis = new SampleImpl(sunny(), randomTemp());
+        Sample predictThis = new Sample(sunny(), randomTemp());
 
         NodeClass expected = NodeClass.POSITIVE,
                 actual = instance.predictSample(model, predictThis).getPredictedValue();
@@ -72,7 +71,7 @@ public class PredictUsingRulesTest {
         Model model = treeBuilder.build(getTennisSamples(), niceDayForTennis(), getTennisAttributes());
 
         List<Sample> predictThis = new ArrayList<Sample>(getTennisSamples());
-        Sample outlier = new SampleImpl(cloudy(), hot(), highHumidity(), strongWind(), noTennis());
+        Sample outlier = new Sample(cloudy(), hot(), highHumidity(), strongWind(), noTennis());
         predictThis.add(outlier);
 
         List<Prediction> predictions = instance.predict(model, predictThis);

@@ -18,8 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author kristian
- *         Created 22.09.15.
+ * Prunes a model based on rules.
  */
 public class RulePruner {
     private final Logger log = LoggerFactory.getLogger(RulePruner.class);
@@ -85,12 +84,6 @@ public class RulePruner {
             }
         }
         return null;
-    }
-
-    private void printRules(List<Rule> rules) {
-        for (Rule r : rules) {
-            log.debug(r.toString());
-        }
     }
 
     /**

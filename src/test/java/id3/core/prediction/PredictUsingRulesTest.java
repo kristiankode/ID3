@@ -32,7 +32,7 @@ public class PredictUsingRulesTest {
 
     private static final double acceptableError = 0.001;
     private final DecisionTreeBuilder treeBuilder = new DecisionTreeBuilder();
-    private final Predictor instance = new PredictUsingRules();
+    private final PredictUsingRules instance = new PredictUsingRules();
     private final Accuracy accuracy = new Accuracy();
 
     @Test

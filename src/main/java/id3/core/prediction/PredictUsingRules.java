@@ -16,9 +16,7 @@ import java.util.List;
  * @author kristian
  *         Created 22.09.15.
  */
-public class PredictUsingRules implements Predictor {
-    private final Logger log = LoggerFactory.getLogger(PredictUsingRules.class);
-
+public class PredictUsingRules {
     private final RuleBuilder ruleBuilder = new RuleBuilder();
     private final Accuracy accuracy = new Accuracy();
 
@@ -46,10 +44,6 @@ public class PredictUsingRules implements Predictor {
             if (sampleMatchesRule(sample, rule)) {
                 prediction = new Prediction(sample, rule.getPostCondition(), rule);
             }
-        }
-
-        if (prediction == null) {
-            log.error("Unable to predict sample {}, matched no rule", sample);
         }
 
         return prediction;

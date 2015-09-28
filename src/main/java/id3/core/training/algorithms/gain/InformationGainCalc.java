@@ -20,8 +20,6 @@ import static java.math.BigDecimal.valueOf;
  *         Created 16.09.15.
  */
 public class InformationGainCalc implements GainCalculator {
-    final static Logger log = LoggerFactory.getLogger(InformationGainCalc.class);
-
     private static final ListEntropy entropyCalc = new ListEntropy();
     private static final int PRECISION = 4;
 

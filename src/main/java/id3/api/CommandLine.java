@@ -57,10 +57,6 @@ public class CommandLine {
         print("Specificity: " + runner.getSpecificity(predictions));
     }
 
-    private static String fixFilePath(String path) {
-        return CommandLine.class.getResource(path).getPath();
-    }
-
     private static boolean filePathIsValid(String filepath) {
         try {
             print("checking file path " + filepath);

@@ -3,8 +3,7 @@ package id3.core.pruning;
 import id3.api.domain.Rule;
 
 /**
- * @author kristian
- *         Created 24.09.15.
+ * A class containing the original, unpruned rule, and the rule after pruning.
  */
 class PruningResult {
     final Rule unprunedRule;

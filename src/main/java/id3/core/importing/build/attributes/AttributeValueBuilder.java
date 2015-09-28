@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
  *         Created 25.09.15.
  */
 public class AttributeValueBuilder {
-    private static final Logger log = LoggerFactory.getLogger(AttributeValueBuilder.class);
 
     private static final String MISSING_ATTRIBUTE = "?";
     ReplaceMissingWithCommon missingAttributeFixer;
@@ -23,7 +22,7 @@ public class AttributeValueBuilder {
         if (missingAttributeFixer != null && isAttributeMissing(value)) {
             attributeValue = missingAttributeFixer.getReplacementFor(attributeClass);
         } else {
-            attributeValue = new AttrValueImpl(attributeClass, value);
+            attributeValue = new AttributeValue(attributeClass, value);
         }
 
         return attributeValue;
@@ -41,52 +40,4 @@ public class AttributeValueBuilder {
     private boolean isAttributeMissing(String value) {
         return value.trim().equals(MISSING_ATTRIBUTE);
     }
-
-
-    private class AttrValueImpl implements AttributeValue {
-
-        private final AttributeClass attributeClass;
-        private final String value;
-
-        public AttrValueImpl(AttributeClass attrClass, String value) {
-            this.attributeClass = attrClass;
-            this.value = value;
-        }
-
-        public AttributeClass getAttributeClass() {
-            return attributeClass;
-        }
-
-        public String getValue() {
-            return value;
-        }
-
-        public String getLabel() {
-            return attributeClass.getLabel();
-        }
-
-        public String toString() {
-            return getLabel() + " = " + value;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-
-            AttrValueImpl attrValue = (AttrValueImpl) o;
-
-            if (!attributeClass.equals(attrValue.attributeClass)) return false;
-            return !(value != null ? !value.equals(attrValue.value) : attrValue.value != null);
-
-        }
-
-        @Override
-        public int hashCode() {
-            int result = attributeClass.hashCode();
-            result = 31 * result + (value != null ? value.hashCode() : 0);
-            return result;
-        }
-    }
-
 }

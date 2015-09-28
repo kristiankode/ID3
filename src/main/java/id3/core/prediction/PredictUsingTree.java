@@ -16,8 +16,7 @@ import java.util.List;
  * @author kristian
  *         Created 21.09.15.
  */
-public class PredictUsingTree implements Predictor {
-    private final Logger log = LoggerFactory.getLogger(PredictUsingTree.class);
+public class PredictUsingTree {
     private final Accuracy accuracy = new Accuracy();
 
     public List<Prediction> predict(Model model, List<Sample> unseenSamples) {

@@ -40,7 +40,7 @@ public class RuleBuilder {
      * @return
      */
     public Rule build(Rule rule, AttributeValue... attributesToRemove) {
-        RuleImpl newRule = new RuleImpl(rule.getTargetValue());
+        Rule newRule = new Rule(rule.getTargetValue());
         newRule.getPreconditions().addAll(rule.getPreconditions());
         newRule.getPreconditions().removeAll(Arrays.asList(attributesToRemove));
 
@@ -60,7 +60,7 @@ public class RuleBuilder {
     }
 
     private Rule buildRule(Node leaf, AttributeValue target) {
-        RuleImpl rule = new RuleImpl(target);
+        Rule rule = new Rule(target);
 
         rule.addPrecondition(leaf.getAttributeValue());
         rule.setPostCondition(leaf.getClassification());
@@ -97,68 +97,5 @@ public class RuleBuilder {
         }
 
         return counter;
-    }
-
-
-    private class RuleImpl implements Rule {
-        Logger log = LoggerFactory.getLogger(RuleImpl.class);
-
-        public static final String AND = " AND ";
-        private NodeClass postCondition;
-        private final List<AttributeValue> preconditions = new ArrayList<AttributeValue>();
-        private final AttributeValue targetValue;
-
-        public RuleImpl(AttributeValue target) {
-            this.targetValue = target;
-        }
-
-        public RuleImpl(Rule rule) {
-            this.addPreconditions(rule.getPreconditions());
-            this.targetValue = rule.getTargetValue();
-        }
-
-        public void addPrecondition(AttributeValue precondition) {
-            if (precondition != null) {
-                this.preconditions.add(0, precondition); // insert at beginning
-            }
-        }
-
-        public void addPreconditions(List<AttributeValue> preconditions) {
-            this.preconditions.addAll(new ArrayList<AttributeValue>(preconditions));
-        }
-
-        public void setPostCondition(NodeClass postCondition) {
-            this.postCondition = postCondition;
-        }
-
-        public List<AttributeValue> getPreconditions() {
-            return preconditions;
-        }
-
-        public NodeClass getPostCondition() {
-            return postCondition;
-        }
-
-        public AttributeValue getTargetValue() {
-            return targetValue;
-        }
-
-        public String toString() {
-
-            StringBuilder sb = new StringBuilder();
-
-            for (AttributeValue val : preconditions) {
-                sb.append("<").append(val).append(">")
-                        .append(AND);
-            }
-            if (sb.indexOf(AND) >= 0) {
-                sb.delete(sb.lastIndexOf(AND), sb.length());
-            }
-
-            sb.append(" --> ").append(targetValue).append(" = ").append(postCondition);
-
-            return sb.toString();
-
-        }
     }
 }

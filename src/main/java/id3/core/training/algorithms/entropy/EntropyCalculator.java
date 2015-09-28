@@ -6,8 +6,7 @@ import static java.math.BigDecimal.valueOf;
 import static java.math.RoundingMode.HALF_UP;
 
 /**
- * @author kristian
- *         Created 16.09.15.
+ * General entropy calculator.
  */
 public class EntropyCalculator {
 

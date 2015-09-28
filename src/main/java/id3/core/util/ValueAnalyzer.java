@@ -1,10 +1,9 @@
-package id3.core.analysis;
+package id3.core.util;
 
 import id3.api.domain.Sample;
 import id3.api.domain.attr.AttributeClass;
 import id3.api.domain.attr.AttributeValue;
 import id3.api.domain.tree.NodeClass;
-import id3.core.training.filter.SampleFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

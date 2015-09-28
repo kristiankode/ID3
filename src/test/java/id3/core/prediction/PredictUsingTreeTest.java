@@ -8,7 +8,7 @@ import id3.api.domain.tree.NodeClass;
 import id3.core.prediction.analysis.measures.Accuracy;
 import id3.core.pruning.RulePruner;
 import id3.testdata.MushroomTestData;
-import id3.core.training.algorithms.DecisionTreeBuilder;
+import id3.core.training.algorithms.Id3Algorithm;
 import org.junit.Test;
 
 import java.io.FileNotFoundException;
@@ -28,7 +28,7 @@ import static org.junit.Assert.assertThat;
 public class PredictUsingTreeTest {
 
     private static final double acceptableError = 0.001;
-    private final DecisionTreeBuilder treeBuilder = new DecisionTreeBuilder();
+    private final Id3Algorithm treeBuilder = new Id3Algorithm();
     private final PredictUsingTree instance = new PredictUsingTree();
     private final Accuracy accuracy = new Accuracy();
 

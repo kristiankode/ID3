@@ -4,7 +4,7 @@ import id3.api.domain.attr.AttributeValue;
 import id3.api.domain.tree.NodeClass;
 import id3.core.prediction.Prediction;
 
-import static id3.core.analysis.ValueAnalyzer.sampleMatchesTarget;
+import static id3.core.util.ValueAnalyzer.sampleMatchesTarget;
 
 /**
  * Measures prediction accuracy.

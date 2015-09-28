@@ -6,8 +6,7 @@ import id3.api.domain.attr.AttributeClass;
 import java.util.List;
 
 /**
- * @author kristian
- *         Created 25.09.15.
+ * Calculates the split information for a list of samples.
  */
 public class SplitInformation {
 

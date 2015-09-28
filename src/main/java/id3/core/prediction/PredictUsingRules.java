@@ -13,8 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author kristian
- *         Created 22.09.15.
+ * Predicts a model by converting it to rules. Necessary predicting after pruning.
  */
 public class PredictUsingRules {
     private final RuleBuilder ruleBuilder = new RuleBuilder();

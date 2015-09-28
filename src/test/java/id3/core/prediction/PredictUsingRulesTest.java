@@ -6,7 +6,7 @@ import id3.api.domain.attr.AttributeClass;
 import id3.api.domain.attr.AttributeValue;
 import id3.api.domain.tree.NodeClass;
 import id3.core.prediction.analysis.measures.Accuracy;
-import id3.core.training.algorithms.DecisionTreeBuilder;
+import id3.core.training.algorithms.Id3Algorithm;
 import id3.testdata.MushroomTestData;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -31,7 +31,7 @@ public class PredictUsingRulesTest {
     private static final Logger log = LoggerFactory.getLogger(PredictUsingRulesTest.class);
 
     private static final double acceptableError = 0.001;
-    private final DecisionTreeBuilder treeBuilder = new DecisionTreeBuilder();
+    private final Id3Algorithm treeBuilder = new Id3Algorithm();
     private final PredictUsingRules instance = new PredictUsingRules();
     private final Accuracy accuracy = new Accuracy();
 

@@ -8,8 +8,7 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
- * @author kristian
- *         Created 25.09.15.
+ * Command line interface.
  */
 public class CommandLine {
 
@@ -21,6 +20,15 @@ public class CommandLine {
 
     private static Runner runner;
 
+    /**
+     * Executes the id3 program through the command line.
+     * @param args Arguments in order:
+     *             Absolute file path of the csv file to read,
+     *             0-based index of which column to use as target,
+     *             A number between 0-1 representing the percentage to reserve for validation,
+     *             A number 0 or 1 specifying if the data contains header columns.
+     * @throws FileNotFoundException
+     */
     public static void main(String[] args) throws FileNotFoundException {
 
         String filePath = args[FILE_PATH_INDEX];

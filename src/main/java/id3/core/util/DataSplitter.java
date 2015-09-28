@@ -1,4 +1,4 @@
-package id3.core.analysis;
+package id3.core.util;
 
 import id3.api.domain.Sample;
 import id3.core.importing.filter.RandomFilter;

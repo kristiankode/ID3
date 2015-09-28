@@ -4,17 +4,14 @@ import id3.api.domain.Model;
 import id3.api.domain.Sample;
 import id3.api.domain.tree.Node;
 import id3.api.domain.tree.NodeClass;
-import id3.core.analysis.ValueAnalyzer;
+import id3.core.util.ValueAnalyzer;
 import id3.core.prediction.analysis.measures.Accuracy;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author kristian
- *         Created 21.09.15.
+ * Predicts a model using the tree structure.
  */
 public class PredictUsingTree {
     private final Accuracy accuracy = new Accuracy();

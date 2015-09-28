@@ -5,7 +5,7 @@ import id3.api.domain.Rule;
 import id3.api.domain.Sample;
 import id3.api.domain.attr.AttributeClass;
 import id3.api.domain.attr.AttributeValue;
-import id3.core.analysis.DataSplitter;
+import id3.core.util.DataSplitter;
 import id3.core.importing.ImportFromCsv;
 import id3.core.prediction.PredictUsingRules;
 import id3.core.prediction.PredictUsingTree;
@@ -15,7 +15,7 @@ import id3.core.prediction.analysis.measures.PerformanceEvaluator;
 import id3.core.prediction.analysis.measures.Sensitivity;
 import id3.core.prediction.analysis.measures.Specificity;
 import id3.core.pruning.RulePruner;
-import id3.core.training.algorithms.DecisionTreeBuilder;
+import id3.core.training.algorithms.Id3Algorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,8 +23,7 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
- * @author kristian
- *         Created 24.09.15.
+ * Runs the decision tree algorithm on a csv file.
  */
 public class Runner {
     Logger log = LoggerFactory.getLogger(Runner.class);
@@ -41,17 +40,25 @@ public class Runner {
             specificity = new Specificity();
     private List<Prediction> predictions;
 
+    /**
+     * Algorithm entry point
+     *
+     * @param filePath             Absolute path to file
+     * @param targetColumn         Zero-based index of which column to use as target.
+     * @param validationPercentage A number 0-100 representing how much of the data set should be reserved for validation.
+     * @throws FileNotFoundException
+     */
     public Runner(String filePath, int targetColumn, Double validationPercentage)
             throws FileNotFoundException {
         run(filePath, targetColumn, validationPercentage);
     }
 
-    private List<Rule> run(String csv, int targetColumn, double validationPercentage)
+    private List<Rule> run(String csvFilePath, int targetColumn, double validationPercentage)
             throws FileNotFoundException {
 
-        DecisionTreeBuilder treeBuilder = new DecisionTreeBuilder();
+        Id3Algorithm treeBuilder = new Id3Algorithm();
 
-        ImportFromCsv csvImporter = new ImportFromCsv(csv);
+        ImportFromCsv csvImporter = new ImportFromCsv(csvFilePath);
 
         List<AttributeClass> attributes = csvImporter.retrieveAttributes();
         List<Sample> allSamples = csvImporter.retrieveSamples(attributes);

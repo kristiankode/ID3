@@ -1,8 +1,7 @@
 package id3.api.domain.attr;
 
 /**
- * @author kristian
- *         Created 15.09.15.
+ * Contains a specific value for an attribute.
  */
 public class AttributeValue {
 

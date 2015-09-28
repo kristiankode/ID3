@@ -4,13 +4,11 @@ import id3.api.domain.Sample;
 import id3.api.domain.attr.AttributeClass;
 import id3.api.domain.attr.AttributeValue;
 import id3.core.training.algorithms.entropy.ListEntropy;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.math.RoundingMode;
 import java.util.List;
 
-import static id3.core.training.filter.SampleFilter.filterByAttributeValue;
+import static id3.core.util.SampleFilter.filterByAttributeValue;
 import static java.math.BigDecimal.valueOf;
 
 /**
@@ -36,6 +34,12 @@ public class InformationGainCalc implements GainCalculator {
         return initialEntropy - expectedEntropy;
     }
 
+    /**
+     * Calculates the entropy of a subset.
+     * @param samples All samples.
+     * @param attributeClass The attribute to divide samples into subsets by.
+     * @return
+     */
     private Double getExpectedEntropy(List<Sample> samples, AttributeClass attributeClass) {
         Double expectedEntropy = 0.0;
 

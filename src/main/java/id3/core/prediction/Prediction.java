@@ -5,8 +5,9 @@ import id3.api.domain.Sample;
 import id3.api.domain.tree.NodeClass;
 
 /**
- * @author kristian
- *         Created 21.09.15.
+ * Class containing the result of a prediction.
+ * The class includes the sample that was predicted, the predicted value,
+ * and the rule that was used as basis for the prediction
  */
 public class Prediction {
 
@@ -34,7 +35,7 @@ public class Prediction {
         return predictedValue;
     }
 
-    public String toString(){
-        return sample + " predicted as " + predictedValue + " because of rule [" + reason +"]";
+    public String toString() {
+        return sample + " predicted as " + predictedValue + " because of rule [" + reason + "]";
     }
 }

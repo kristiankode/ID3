@@ -15,17 +15,16 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-import static id3.core.analysis.ValueAnalyzer.*;
 import static id3.api.domain.tree.NodeClass.NEGATIVE;
 import static id3.api.domain.tree.NodeClass.POSITIVE;
-import static id3.core.training.filter.SampleFilter.filterByAttributeValue;
+import static id3.core.util.ValueAnalyzer.*;
+import static id3.core.util.SampleFilter.filterByAttributeValue;
 
 /**
- * @author kristian
- *         Created 15.09.15.
+ * Builds a decision tree based on the id3 algorithm.
  */
-public class DecisionTreeBuilder {
-    private final static Logger log = LoggerFactory.getLogger(DecisionTreeBuilder.class);
+public class Id3Algorithm {
+    private final static Logger log = LoggerFactory.getLogger(Id3Algorithm.class);
 
     private AttributeSelector attributeSelector;
 
@@ -46,17 +45,6 @@ public class DecisionTreeBuilder {
         return new Model(rootNode, attributes, targetAttribute);
     }
 
-    private void sanitizeAttributes(List<AttributeClass> attributes, AttributeValue target) {
-        int i = -1;
-        if (attributes.contains(target.getAttributeClass())) {
-            i = attributes.indexOf(target.getAttributeClass());
-            log.info("Removed target ({}) from attribute list", target.getAttributeClass());
-        }
-        if (i >= 0) {
-            attributes.remove(i);
-        }
-    }
-
     private Node id3Recursion(List<Sample> allSamples, AttributeValue targetAttribute, List<AttributeClass> attributes,
                               Node root) {
 
@@ -71,23 +59,25 @@ public class DecisionTreeBuilder {
 
         if (!root.isLeaf()) { // value has not been set
 
+            // selects best attribute
             AttributeClass bestAttr = attributeSelector.selectAttribute(allSamples, attributes);
 
             for (AttributeValue possibleValue : bestAttr.getPossibleValues()) {
 
+                // create new node for this attribute
                 Node attributeNode = new Node(root);
                 attributeNode.setAttributeValue(possibleValue);
 
                 List<Sample> matchingSamples = filterByAttributeValue(allSamples, possibleValue);
 
-                if (matchingSamples.isEmpty()) {
+                if (matchingSamples.isEmpty()) { // no samples matches attribute value
                     NodeClass mostCommon = mostCommonValueIn(allSamples, targetAttribute);
                     attributeNode.makeLeaf(possibleValue, mostCommon);
                     log.debug("Found no matching samples for attr {}, added leaf {}",
                             mostCommon,
                             attributeNode.description());
                 } else {
-
+                    // remove the recently evaluated attribute from the list, and repeat algorithm.
                     List<AttributeClass> remainingAttributes = new ArrayList<AttributeClass>(attributes);
                     remainingAttributes.remove(bestAttr);
 
@@ -97,5 +87,23 @@ public class DecisionTreeBuilder {
             }
         }
         return root;
+    }
+
+
+    /**
+     * Removes target attribute from decision tree attributes.
+     *
+     * @param attributes All attributes.
+     * @param target     The target attribute.
+     */
+    private void sanitizeAttributes(List<AttributeClass> attributes, AttributeValue target) {
+        int i = -1;
+        if (attributes.contains(target.getAttributeClass())) {
+            i = attributes.indexOf(target.getAttributeClass());
+            log.info("Removed target ({}) from attribute list", target.getAttributeClass());
+        }
+        if (i >= 0) {
+            attributes.remove(i);
+        }
     }
 }

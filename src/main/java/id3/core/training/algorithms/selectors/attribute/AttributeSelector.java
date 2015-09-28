@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 /**
- * Selects the attribute that offers the highest information gain.
+ * Selects the attribute that offers the highest gain.
  *
  * @author kristian
  *         Created 15.09.15.
@@ -18,6 +18,12 @@ public class AttributeSelector {
     private final static Logger log = LoggerFactory.getLogger(AttributeSelector.class);
     private final GainCalculator gainCalculator;
 
+    /**
+     * Creates new instance of an attribute selector
+     *
+     * @param gainCalculator Which implementation of the gain calculator to use for selecting attributes.
+     *                       (i.e InformationGain or GainRatio).
+     */
     public AttributeSelector(GainCalculator gainCalculator) {
         this.gainCalculator = gainCalculator;
     }

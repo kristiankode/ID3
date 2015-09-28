@@ -3,23 +3,25 @@ package id3.core.training.algorithms.entropy;
 import id3.api.domain.Sample;
 import id3.api.domain.attr.AttributeClass;
 import id3.api.domain.attr.AttributeValue;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static id3.core.analysis.ValueAnalyzer.sampleMatchesTarget;
+import static id3.core.util.ValueAnalyzer.sampleMatchesTarget;
 
 /**
- * @author kristian
- *         Created 16.09.15.
+ * Calculates entropy for a list of samples.
  */
 public class ListEntropy {
-    final static Logger log = LoggerFactory.getLogger(ListEntropy.class);
-
     private final EntropyCalculator entropy = new EntropyCalculator();
 
+    /**
+     * Calculates the entropy of a list of samples with only two possible classifications.
+     * @param samples The samples to find entropy of.
+     * @param targetAttribute The positive value of the target attribute.
+     * @return
+     * @deprecated Replaced by the more general variant.
+     */
     @Deprecated
     public double calculateEntropy(List<Sample> samples, AttributeValue targetAttribute) {
         int positive = countPositiveSamples(samples, targetAttribute);
@@ -28,6 +30,12 @@ public class ListEntropy {
         return entropy.calc(positive, negative);
     }
 
+    /**
+     * Calculates the entropy of a list of samples with any number of possible classifications.
+     * @param samples The samples to find entropy of.
+     * @param attribute The target attribute class (all possible values for target).
+     * @return
+     */
     public double calculateEntropy(List<Sample> samples, AttributeClass attribute) {
         return entropy.calc(getSubsetSizes(samples, attribute));
     }

@@ -6,8 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author kristian
- *         Created 15.09.15.
+ * Contains the name of an attribute and all its possible values.
  */
 public class AttributeClass {
 

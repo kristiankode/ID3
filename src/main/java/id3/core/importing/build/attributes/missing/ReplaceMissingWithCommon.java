@@ -3,7 +3,7 @@ package id3.core.importing.build.attributes.missing;
 import id3.api.domain.Sample;
 import id3.api.domain.attr.AttributeClass;
 import id3.api.domain.attr.AttributeValue;
-import id3.core.analysis.ValueAnalyzer;
+import id3.core.util.ValueAnalyzer;
 import id3.core.importing.build.SampleBuilder;
 import id3.core.importing.build.attributes.AttributeExtractor;
 import id3.core.importing.read.DataReader;

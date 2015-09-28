@@ -11,8 +11,7 @@ import static java.math.BigDecimal.ROUND_HALF_UP;
 import static java.math.BigDecimal.valueOf;
 
 /**
- * @author kristian
- *         Created 25.09.15.
+ * Calculates gain by dividing gain ratio on split information.
  */
 public class GainRatio implements GainCalculator {
 

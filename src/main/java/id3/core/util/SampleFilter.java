@@ -1,4 +1,4 @@
-package id3.core.training.filter;
+package id3.core.util;
 
 import id3.api.domain.Sample;
 import id3.api.domain.attr.AttributeValue;
@@ -14,10 +14,7 @@ import java.util.List;
  */
 public class SampleFilter {
 
-    static final Logger log = LoggerFactory.getLogger(SampleFilter.class);
-
     public static List<Sample> filterByAttributeValue(List<Sample> unfiltered, AttributeValue attribute) {
-
 
         List<Sample> matchingSamples = new ArrayList<Sample>();
         for (Sample sample : unfiltered) {

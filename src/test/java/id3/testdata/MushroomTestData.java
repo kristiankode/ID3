@@ -6,7 +6,7 @@ import id3.api.domain.attr.AttributeClass;
 import id3.core.importing.ImportFromCsv;
 import id3.core.importing.build.SampleBuilder;
 import id3.core.importing.filter.RandomFilter;
-import id3.core.training.algorithms.DecisionTreeBuilder;
+import id3.core.training.algorithms.Id3Algorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -76,7 +76,7 @@ public class MushroomTestData {
 
     public Model getMushroomModel() throws FileNotFoundException, UnsupportedEncodingException {
         List<AttributeClass> attributes = getMushroomAttributes();
-        DecisionTreeBuilder treeBuilder = new DecisionTreeBuilder();
+        Id3Algorithm treeBuilder = new Id3Algorithm();
         return treeBuilder.build(getTrainingSet(), attributes.get(0).getPossibleValues().get(0), attributes);
     }
 

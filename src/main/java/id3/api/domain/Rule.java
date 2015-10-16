@@ -59,7 +59,7 @@ public class Rule {
         StringBuilder sb = new StringBuilder();
 
         for (AttributeValue val : preconditions) {
-            sb.append("<").append(val).append(">")
+            sb.append(val)
                     .append(AND);
         }
         if (sb.indexOf(AND) >= 0) {

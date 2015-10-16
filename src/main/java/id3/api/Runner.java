@@ -5,6 +5,7 @@ import id3.api.domain.Rule;
 import id3.api.domain.Sample;
 import id3.api.domain.attr.AttributeClass;
 import id3.api.domain.attr.AttributeValue;
+import id3.core.pruning.rules.RuleBuilder;
 import id3.core.util.DataSplitter;
 import id3.core.importing.ImportFromCsv;
 import id3.core.prediction.PredictUsingRules;
@@ -32,7 +33,7 @@ public class Runner {
     private Model model;
     private PredictUsingTree predictorWithoutPruning = new PredictUsingTree();
     private PredictUsingRules predictorWithPruning = new PredictUsingRules();
-    private List<Rule> rules;
+    private List<Rule> unprunedRules, prunedRules;
 
     private final PerformanceEvaluator
             accuracy = new Accuracy(),
@@ -68,14 +69,16 @@ public class Runner {
 
         log.info("Loaded {} training samples and {} attributes", data.getTrainingSet().size(), attributes.size());
         model = treeBuilder.build(data.getTrainingSet(), target, attributes);
+        RuleBuilder ruleBuilder = new RuleBuilder();
+        unprunedRules = ruleBuilder.build(model);
 
         RulePruner pruner = new RulePruner();
         pruner.setPerformanceEvaluator(accuracy);
 
-        rules = pruner.pruneRepeatedly(model, data.getValidationSet());
+        prunedRules = pruner.pruneRepeatedly(model, data.getValidationSet());
 
-        predictions = predictorWithPruning.predict(rules, data.getValidationSet());
-        return rules;
+        predictions = predictorWithPruning.predict(prunedRules, data.getValidationSet());
+        return prunedRules;
     }
 
     public List<Prediction> getTrainingPredictionWithoutPruning() {
@@ -87,11 +90,11 @@ public class Runner {
     }
 
     public List<Prediction> getTrainingPredictionWithPruning() {
-        return predictorWithPruning.predict(getRules(), data.getTrainingSet());
+        return predictorWithPruning.predict(getPrunedRules(), data.getTrainingSet());
     }
 
     public List<Prediction> getValidationPredictionWithPruning() {
-        return predictorWithPruning.predict(getRules(), data.getValidationSet());
+        return predictorWithPruning.predict(getPrunedRules(), data.getValidationSet());
     }
 
     public AttributeValue getTarget() {
@@ -114,7 +117,11 @@ public class Runner {
         return specificity.evaluate(predictions, target);
     }
 
-    public List<Rule> getRules() {
-        return rules;
+    public List<Rule> getPrunedRules() {
+        return prunedRules;
+    }
+
+    public List<Rule> getUnprunedRules() {
+        return unprunedRules;
     }
 }

@@ -22,6 +22,7 @@ public class CommandLine {
 
     /**
      * Executes the id3 program through the command line.
+     *
      * @param args Arguments in order:
      *             Absolute file path of the csv file to read,
      *             0-based index of which column to use as target,
@@ -34,12 +35,17 @@ public class CommandLine {
         String filePath = args[FILE_PATH_INDEX];
         Integer targetColumnIndex = Integer.parseInt(args[TARGET_COL_INDEX]);
         Double validationPercentage = Double.parseDouble(args[VALIDATION_PERCENTAGE_INDEX]);
-        boolean dataHasHeaderRow = Boolean.parseBoolean(args[HAS_HEADER_ROW_INDEX]);
+        boolean dataHasHeaderRow = true;
 
-        List<Rule> rules = null;
+        List<Rule> rules;
 
         if (filePathIsValid(filePath)) {
             runner = new Runner(filePath, targetColumnIndex, validationPercentage * 100);
+
+            print("-------- Created the following rules (before pruning) ------------");
+            for (Rule r : runner.getUnprunedRules()) {
+                print(r.toString());
+            }
 
             // print accuracy of training-set before and after pruning
             printAccuracy("Training set before pruning", runner.getTrainingPredictionWithoutPruning());
@@ -49,7 +55,7 @@ public class CommandLine {
             printAccuracy("Validation set before pruning", runner.getValidationPredictionWithoutPruning());
             printAccuracy("Validation set after pruning", runner.getValidationPredictionWithPruning());
 
-            rules = runner.getRules();
+            rules = runner.getPrunedRules();
 
             print("------- Created the following rules (after pruning) ----------");
             for (Rule r : rules) {

@@ -29,8 +29,7 @@ public class Id3Algorithm {
     private AttributeSelector attributeSelector;
 
     public Model build(List<Sample> allSamples, AttributeValue targetAttribute, List<AttributeClass> attributes) {
-        System.out.println("Building decision tree for answering: Is it " + targetAttribute.getValue() + "?");
-        System.out.println("----------------------------------------------------------------");
+        System.out.println("Building decision tree for answering: Is " + targetAttribute + "?");
 
         GainCalculator gainCalculator = new GainRatio(targetAttribute);
         attributeSelector = new AttributeSelector(gainCalculator);
@@ -38,9 +37,6 @@ public class Id3Algorithm {
 
         Node rootNode = new Node();
         Node decisionTree = id3Recursion(allSamples, targetAttribute, attributes, rootNode);
-
-        System.out.println("------ Trained decision tree: ----------");
-        decisionTree.print();
 
         return new Model(rootNode, attributes, targetAttribute);
     }
